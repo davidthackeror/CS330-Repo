@@ -107,66 +107,70 @@ public class Main {
         System.out.println(N);
         System.out.println("Please enter a number " + name);
         int guess = 0;
+
         int maxGuess = 0;
+        boolean maxGuessBool = false;
         int minGuess = MAX_INT;
-        boolean loopThrough = false;
+        boolean minGuessBool = false;
 
         do {
             if (input.hasNextInt()) {
                 guess = input.nextInt();
-                if (guess == N) {
-                    break;
-                }
-                if(guess > maxGuess && !loopThrough){
-                    maxGuess = guess;
-                }
-                if(guess < minGuess && !loopThrough){
-                    minGuess = guess;
-                }
-            }
-            //Checks to see if the users guess was outside of the specified range
-            if((guess > maxGuess || guess < minGuess) && loopThrough){
-                if (guess > maxGuess && guess > N) {
-                    System.out.println("Did you seriously guess something higher after I told you to go lower?");
-                    //Increment Guess Counter
-                    System.out.println("Please try again and enter a number");
+                if (guess < N && guess > 1) {
+                    if (guess <= minGuess) {
+                        if (!minGuessBool) {
+                            minGuessBool = true;
+                            minGuess = guess;
+                            System.out.println("That guess was 2 low");
+                            guesses++;
+                            System.out.println("Please input a number");
+                        } else {
+                            minGuess = guess;
+                            System.out.println("Did you seriously input something lower than something that I already told you was low?\nTry something higher than " + minGuess);
+                            guesses++;
+                            System.out.println("Please input a number");
+                        }
+                    }
+                } else if (guess < 1) {
+                    System.out.println("You're gonna wanna reel that number back closer to between 1 and " + MAX_INT);
                     guesses++;
-                }
-                if (guess < minGuess && guess < N) {
-                    System.out.println("Did you seriously guess something lower after I told you to go higher?");
-                    //Increment Guess Counter
-                    System.out.println("Please try again and enter a number");
+                    System.out.println("Please input a number");
+                } else if(guess < N ) {
+                    System.out.println("That guess was 2 low");
                     guesses++;
-                }
-            }
-            else {
+                    System.out.println("Please input a number");
 
-                if (guess > MAX_INT || guess < 1) {
-                    System.out.println("Your guess was out of range.");
-                    //Increment Guess Counter
-                    System.out.println("Please try again and enter a number");
-                    guesses++;
                 }
-                //Checks to see if the user has guessed above the secret value
-                else if (guess > N && guess < MAX_INT) {
-                    System.out.println("Your number was 2 high");
-                    //Increment Guess Counter
-                    System.out.println("Please try again and enter a number");
+                if (guess > N && guess < MAX_INT) {
+                    if (guess >= maxGuess) {
+                        if (!maxGuessBool) {
+                            maxGuessBool = true;
+                            maxGuess = guess;
+                            System.out.println("That guess was 2 high");
+                            guesses++;
+                            System.out.println("Please input a number");
+                        } else {
+                            maxGuess = guess;
+                            System.out.println("Did you seriously input something higher than something that I already told you was high?\n Try something lower than " + maxGuess);
+                            guesses++;
+                            System.out.println("Please input a number");
+                        }
+
+                    }
+                } else if (guess > MAX_INT) {
+                    System.out.println("You're gonna wanna reel that number back closer to between 1 and " + MAX_INT);
                     guesses++;
-                    loopThrough = true;
-                }
-                //checks to see if the user guessed below the secret value
-                else if (guess < N && guess > 1) {
-                    System.out.println("Your number was 2 low");
-                    //Increment Guess Counter
-                    System.out.println("Please try again and enter a number");
+                    System.out.println("Please input a number");
+                } else if(guess > N) {
+                    System.out.println("That guess was 2 high");
                     guesses++;
-                    loopThrough = true;
-                } else {
-                    input.nextLine();
                     System.out.println("Please input a number");
                 }
+            } else {
+                input.nextLine();
+                System.out.println("Please input a number between 1 and " + MAX_INT);
             }
+
         } while (guess != N);
 
         //Increment Guess Counter
