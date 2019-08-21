@@ -96,15 +96,26 @@ public class Main {
             return name;
         }
     }
-
-    //PLaying the Game
-    private static int guessingGame(String name) {
-        Scanner input = new Scanner(System.in);
+    /** Function Name: randomNumber()
+     *  Parameters: N/A
+     *  Return: Function returns a random number based on the system time.
+     */
+    private static int randomNumber(){
         Random rand = new Random();
-        int guesses = 0;
         //generates a random number between 0 and 50
-        int N = rand.nextInt(MAX_INT);
+        int N = rand.nextInt(MAX_INT) + 1;
+        //TODO Remove this
         System.out.println(N);
+        return  N;
+    }
+    /** Function Name: guessingGame()
+     *  Parameters: String name, the string including the name the user has previously input.
+     *  Return: Function returns the number of guesses the user made throughout the game
+     */
+    private static int guessingGame(String name) {
+        int randNum = randomNumber();
+        Scanner input = new Scanner(System.in);
+
         System.out.println("Please enter a number " + name);
         int guess = 0;
 
@@ -112,11 +123,11 @@ public class Main {
         boolean maxGuessBool = false;
         int minGuess = MAX_INT;
         boolean minGuessBool = false;
-
+        int guesses = 0;
         do {
             if (input.hasNextInt()) {
                 guess = input.nextInt();
-                if (guess < N && guess > 1) {
+                if (guess < randNum && guess > 1) {
                     if (guess <= minGuess) {
                         if (!minGuessBool) {
                             minGuessBool = true;
@@ -135,13 +146,13 @@ public class Main {
                     System.out.println("You're gonna wanna reel that number back closer to between 1 and " + MAX_INT);
                     guesses++;
                     System.out.println("Please input a number");
-                } else if(guess < N ) {
+                } else if(guess < randNum ) {
                     System.out.println("That guess was 2 low");
                     guesses++;
                     System.out.println("Please input a number");
 
                 }
-                if (guess > N && guess < MAX_INT) {
+                if (guess > randNum && guess < MAX_INT) {
                     if (guess >= maxGuess) {
                         if (!maxGuessBool) {
                             maxGuessBool = true;
@@ -161,7 +172,7 @@ public class Main {
                     System.out.println("You're gonna wanna reel that number back closer to between 1 and " + MAX_INT);
                     guesses++;
                     System.out.println("Please input a number");
-                } else if(guess > N) {
+                } else if(guess > randNum) {
                     System.out.println("That guess was 2 high");
                     guesses++;
                     System.out.println("Please input a number");
@@ -171,11 +182,11 @@ public class Main {
                 System.out.println("Please input a number between 1 and " + MAX_INT);
             }
 
-        } while (guess != N);
+        } while (guess != randNum);
 
         //Increment Guess Counter
         guesses++;
-        System.out.println("The correct number was " + N);
+        System.out.println("The correct number was " + randNum);
         System.out.println("It took you " + guesses + " guesses");
 
         return guesses;
