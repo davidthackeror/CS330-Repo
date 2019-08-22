@@ -1,4 +1,4 @@
-/*
+/**
     Project: High Low Game w/ Attitude
     Author: C2C David J. Thacker
     Date: 20190813
@@ -13,6 +13,12 @@ import java.util.Scanner;
 public class Main {
     private static int MAX_INT = 100;
 
+    /**
+     * Function Name: main()
+     *
+     * @param : N/A
+     * @return: N/A
+     */
     public static void main(String[] args) {
         //gameOver acts as a check to reset the game after the user goes through the replay seesion
         Boolean gameOver = false;
@@ -24,6 +30,7 @@ public class Main {
         //keeps track of total guesses globaly and runs the first session of the game
         totalGuesses = guessingGame(name) + totalGuesses;
         numberGames++;
+
         while (!gameOver) {
             String firstName = JOptionPane.showInputDialog("Would you like to play again " + name);
             firstName.toLowerCase();
@@ -50,16 +57,17 @@ public class Main {
 
     /**
      * Function Name: gameFinish()
-     * Parameters: This function takes in the total number of guesses made during the game, numGuesses, and the total
-     *              number of games played, numGames.
+     * @param numberGames The total number of games played in this instance of the game
+     * @param numGuesses The total number of guesses made across all games in this instance
      * Return: N/A
      */
-    private static void gameFinish(int numGuesses, int numberGames) {
+    private static void gameFinish(int numGuesses, int numberGames)
+    {
         //Average Number of Correct Guesses for Win
         double optimalNumber = (Math.log(MAX_INT) / Math.log(2));
         int average = (numGuesses / numberGames);
         System.out.println("\nIt took you " + average + " guesses on avg to win");
-        System.out.println("The optimal number of guesses per game out have been " + optimalNumber);
+        System.out.printf("The optimal number of guesses per game out have been %.2f %n", optimalNumber);
         //The user achieved a better guess average than the optimal guess strat by 2
         if (optimalNumber - 2 >= average) {
             System.out.println("What do you want an award? You must be pretty proud that your random guesses were right.");
@@ -84,9 +92,10 @@ public class Main {
     /**
      * Function Name: userName()
      * Parameters: N/A
-     * Return: Function returns the name the user has selected or has been assigned to them because they are obstinate
+     * @return name The users selected or assigned name.
      */
-    private static String userName() {
+    private static String userName()
+    {
         String name = "";
         String firstName = JOptionPane.showInputDialog("Enter name please");
         //Check for valid input (AKA is it empty?)
@@ -107,27 +116,27 @@ public class Main {
     /**
      * Function Name: randomNumber()
      * Parameters: N/A
-     * Return: Function returns a random number based on the system time.
+     * @return N The random number generated from the system time.
      */
-    private static int randomNumber() {
+    private static int randomNumber()
+    {
         Random rand = new Random();
         //generates a random number between 0 and 50
         int N = rand.nextInt(MAX_INT) + 1;
-        //TODO Remove this
-        System.out.println(N);
         return N;
     }
 
     /**
      * Function Name: guessingGame()
-     * Parameters: String name, the string including the name the user has previously input.
-     * Return: Function returns the number of guesses the user made throughout the game
+     * @param name The user name selected or assigned to the user.
+     * @return guesses The total number of guesses made in that instance of the game.
      */
-    private static int guessingGame(String name) {
+    private static int guessingGame(String name)
+    {
         int randNum = randomNumber();
         Scanner input = new Scanner(System.in);
-
         System.out.println("Please enter a number " + name);
+
         int guess = 0;
 
         int maxGuess = 0;
@@ -202,6 +211,4 @@ public class Main {
 
         return guesses;
     }
-
-
 }
