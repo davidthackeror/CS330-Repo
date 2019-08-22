@@ -48,9 +48,12 @@ public class Main {
 
     }
 
-    //Conclusion
-    //Optimal Number of Guesses for Win (log2(N))
-    //4 Distinct Game Over Messages
+    /**
+     * Function Name: gameFinish()
+     * Parameters: This function takes in the total number of guesses made during the game, numGuesses, and the total
+     *              number of games played, numGames.
+     * Return: N/A
+     */
     private static void gameFinish(int numGuesses, int numberGames) {
         //Average Number of Correct Guesses for Win
         double optimalNumber = (Math.log(MAX_INT) / Math.log(2));
@@ -78,7 +81,11 @@ public class Main {
 
     }
 
-    //Prompt User for Name
+    /**
+     * Function Name: userName()
+     * Parameters: N/A
+     * Return: Function returns the name the user has selected or has been assigned to them because they are obstinate
+     */
     private static String userName() {
         String name = "";
         String firstName = JOptionPane.showInputDialog("Enter name please");
@@ -96,21 +103,25 @@ public class Main {
             return name;
         }
     }
-    /** Function Name: randomNumber()
-     *  Parameters: N/A
-     *  Return: Function returns a random number based on the system time.
+
+    /**
+     * Function Name: randomNumber()
+     * Parameters: N/A
+     * Return: Function returns a random number based on the system time.
      */
-    private static int randomNumber(){
+    private static int randomNumber() {
         Random rand = new Random();
         //generates a random number between 0 and 50
         int N = rand.nextInt(MAX_INT) + 1;
         //TODO Remove this
         System.out.println(N);
-        return  N;
+        return N;
     }
-    /** Function Name: guessingGame()
-     *  Parameters: String name, the string including the name the user has previously input.
-     *  Return: Function returns the number of guesses the user made throughout the game
+
+    /**
+     * Function Name: guessingGame()
+     * Parameters: String name, the string including the name the user has previously input.
+     * Return: Function returns the number of guesses the user made throughout the game
      */
     private static int guessingGame(String name) {
         int randNum = randomNumber();
@@ -146,7 +157,7 @@ public class Main {
                     System.out.println("You're gonna wanna reel that number back closer to between 1 and " + MAX_INT);
                     guesses++;
                     System.out.println("Please input a number");
-                } else if(guess < randNum ) {
+                } else if (guess < randNum) {
                     System.out.println("That guess was 2 low");
                     guesses++;
                     System.out.println("Please input a number");
@@ -172,7 +183,7 @@ public class Main {
                     System.out.println("You're gonna wanna reel that number back closer to between 1 and " + MAX_INT);
                     guesses++;
                     System.out.println("Please input a number");
-                } else if(guess > randNum) {
+                } else if (guess > randNum) {
                     System.out.println("That guess was 2 high");
                     guesses++;
                     System.out.println("Please input a number");
