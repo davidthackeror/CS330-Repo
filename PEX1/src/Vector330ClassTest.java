@@ -4,6 +4,5 @@
  * Date: 08 Sept 19
  * Class: CS330
  */
-
-public class Main {
+public class Vector330ClassTest {
 }
