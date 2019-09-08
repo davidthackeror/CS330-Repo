@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Project: Vector Design
  * @author David Thacker
@@ -12,6 +14,11 @@ public class VectorCalculator {
      * @param args - unused
      */
     public static void main(java.lang.String[] args) {
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner
+        System.out.println("Enter vector");
+        Vector330Class newVector = Vector330Class.parseVector(myObj);
+        System.out.println(newVector.getX());
+        System.out.println(newVector.getY());
 
     }
 
@@ -32,7 +39,7 @@ public class VectorCalculator {
     }
 
     /**
-     * parseNormalizeExpression() - arses expression to compute a normalized vector; that is, a vector with same direction as input but with magnitude of 1
+     * parseNormalizeExpression() - parses expression to compute a normalized vector; that is, a vector with same direction as input but with magnitude of 1
      * @param s - Scanner from which input expressions are taken
      */
     private static void parseNormalizeExpression(java.util.Scanner s){

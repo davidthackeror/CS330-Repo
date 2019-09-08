@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Project: Vector Design
  *
@@ -218,7 +221,7 @@ public class Vector330Class {
         if (this.magnitude() <= TOLERANCE) {
             return new Vector330Class(0, 0);
         } else {
-            return new Vector330Class((this.x * (1 / this.magnitude())), this.y * (1 / this.magnitude());
+            return new Vector330Class((this.x * (1 / this.magnitude())), this.y * (1 / this.magnitude()));
         }
     }
 
@@ -228,7 +231,7 @@ public class Vector330Class {
      * @return string representation of the vector in the form of <x,y>
      */
     public java.lang.String toString() {
-
+        return "< " + this.x + ", " + this.y + " >";
     }
 
     /**
@@ -239,8 +242,16 @@ public class Vector330Class {
      * @return a new Vector330Class object based on the provided input
      */
     public static Vector330Class parseVector(java.util.Scanner s) {
-        Vector330Class newVector = new Vector330Class();
-
-        return newVector;
+        //TODO works until a decimal is entered, fix
+        String string = s.nextLine();
+        int[] integers = new int[2];
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(string);
+        int counter = 0;
+        while (m.find()){
+            integers[counter] = Integer.parseInt(m.group());
+            counter++;
+        }
+        return  new Vector330Class(integers[0], integers[1]);
     }
 }
