@@ -71,7 +71,7 @@ public class Vector330Class {
     }
 
     /**
-     * scale - dpes a scalar vector mult of the vector with double passed in
+     * scale - does a scalar vector mult of the vector with double passed in
      * @param s - value to scale the vector by
      * @return the scaled vector
      */
