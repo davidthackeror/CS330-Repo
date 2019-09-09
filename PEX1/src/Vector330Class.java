@@ -243,54 +243,33 @@ public class Vector330Class {
      * @return a new Vector330Class object based on the provided input
      */
     public static Vector330Class parseVector(java.util.Scanner s) {
-        String string = s.nextLine();
-        String delims = "[ <,>]+";
-        String[] tokens = string.split(delims);
-
-        if(!isNumber(tokens[1])){
-            if(!isLong(tokens[1])){
-                double x = Double.parseDouble(tokens[1]);
-                double y = Double.parseDouble(tokens[2]);
-                return new Vector330Class(x, y);
+        double x = 0;
+        double y = 0;
+        Pattern ogPattern = s.delimiter();
+        s.useDelimiter("[" + ogPattern + ",]");
+        if (s.hasNext("<")) {
+            s.next("<");
+            if (s.hasNextDouble()) {
+                x = s.nextDouble();
+                s.useDelimiter(ogPattern);
+                if (s.hasNext(",")) {
+                    s.next(",");
+                    if(s.hasNextDouble()){
+                        y = s.nextDouble();
+                    }
+                    else{
+                        System.out.println("Malformed Request in y coord");
+                    }
+                } else {
+                    System.out.println("Malformed Request in comma");
+                }
+            } else {
+                System.out.println("Malformed Request in x coord");
             }
-            else{
-                long x = Long.parseLong(tokens[1]);
-                long y = Long.parseLong(tokens[2]);
-                return new Vector330Class(x, y);
-            }
+        } else {
+            System.out.println("Malformed Request");
         }
-        else{
+        return new Vector330Class(x, y);
+    }
 
-            int x = Integer.parseInt(tokens[1]);
-            int y = Integer.parseInt(tokens[2]);
-            return new Vector330Class(x, y);
-
-        }
-    }
-    /**
-     * isNumber() - detect if input string is a integer by throwing & catching exception
-     *
-     * @return a true if string is an int, false if otherwise
-     */
-    public static boolean isNumber(String str) {
-        try {
-            double v = Integer.parseInt(str);
-            return true;
-        } catch (NumberFormatException nfe) {
-        }
-        return false;
-    }
-    /**
-     * isLong() - detect if input string is a long by throwing & catching exception
-     *
-     * @return a true if string is an long, false if otherwise
-     */
-    public static boolean isLong(String str) {
-        try {
-            Long v = Long.parseLong(str);
-            return true;
-        } catch (NumberFormatException nfe) {
-        }
-        return false;
-    }
 }

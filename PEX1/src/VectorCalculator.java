@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Project: Vector Design
@@ -14,11 +15,32 @@ public class VectorCalculator {
      * @param args - unused
      */
     public static void main(java.lang.String[] args) {
+        Pattern startTokens = Pattern.compile("exit|<|\\d|\\||dir|unit");
         Scanner myObj = new Scanner(System.in);  // Create a Scanner
         System.out.println("Enter vector");
         Vector330Class newVector = Vector330Class.parseVector(myObj);
         System.out.println(newVector.getX());
         System.out.println(newVector.getY());
+        System.out.println(newVector.magnitude());
+        boolean done = false;
+        myObj.close();
+        Scanner cmdScanner = new Scanner(System.in);
+        while(!done){
+            String cmdString = cmdScanner.nextLine();
+            Scanner cmdLineScanner = new Scanner(cmdString);
+
+            if(cmdLineScanner.hasNext(startTokens)){
+                if (cmdLineScanner.hasNext("exit")){
+                    done = true;
+                }
+                else{
+                    parseExpression(cmdLineScanner);
+                }
+            }
+            else{
+                System.out.println("Malformed Request");
+            }
+        }
 
     }
 
@@ -35,7 +57,21 @@ public class VectorCalculator {
      * @param s - Scanner from which input expressions are taken
      */
     private static void parseExpression(java.util.Scanner s){
-
+        if(s.hasNext("\\|")){
+            parseNormExpression(s);
+        }
+        else if(s.hasNext("dir")){
+            parseDirectionExpression(s);
+        }
+        else if(s.hasNext("unit")){
+            parseNormalizeExpression(s);
+        }
+        else if(s.hasNext("\\d")){
+            parseScaleExpression(s);
+        }
+        else{
+            parseVectorExpression(s);
+        }
     }
 
     /**
