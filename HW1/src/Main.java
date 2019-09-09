@@ -15,9 +15,7 @@ public class Main {
 
     /**
      * Function Name: main()
-     *
-     * @param : N/A
-     * @return: N/A
+     * @param args The terminal args
      */
     public static void main(String[] args) {
         //gameOver acts as a check to reset the game after the user goes through the replay seesion
@@ -61,7 +59,7 @@ public class Main {
      * @param numGuesses The total number of guesses made across all games in this instance
      * Return: N/A
      */
-    private static void gameFinish(int numGuesses, int numberGames)
+    public static void gameFinish(int numGuesses, int numberGames)
     {
         //Average Number of Correct Guesses for Win
         double optimalNumber = (Math.log(MAX_INT) / Math.log(2));
@@ -94,7 +92,7 @@ public class Main {
      * Parameters: N/A
      * @return name The users selected or assigned name.
      */
-    private static String userName()
+    public static String userName()
     {
         String name = "";
         String firstName = JOptionPane.showInputDialog("Enter name please");
@@ -118,7 +116,7 @@ public class Main {
      * Parameters: N/A
      * @return N The random number generated from the system time.
      */
-    private static int randomNumber()
+    public static int randomNumber()
     {
         Random rand = new Random();
         //generates a random number between 0 and 50
@@ -131,7 +129,7 @@ public class Main {
      * @param name The user name selected or assigned to the user.
      * @return guesses The total number of guesses made in that instance of the game.
      */
-    private static int guessingGame(String name)
+    public static int guessingGame(String name)
     {
         int randNum = randomNumber();
         Scanner input = new Scanner(System.in);

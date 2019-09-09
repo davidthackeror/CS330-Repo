@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -242,16 +243,54 @@ public class Vector330Class {
      * @return a new Vector330Class object based on the provided input
      */
     public static Vector330Class parseVector(java.util.Scanner s) {
-        //TODO works until a decimal is entered, fix
         String string = s.nextLine();
-        int[] integers = new int[2];
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(string);
-        int counter = 0;
-        while (m.find()){
-            integers[counter] = Integer.parseInt(m.group());
-            counter++;
+        String delims = "[ <,>]+";
+        String[] tokens = string.split(delims);
+
+        if(!isNumber(tokens[1])){
+            if(!isLong(tokens[1])){
+                double x = Double.parseDouble(tokens[1]);
+                double y = Double.parseDouble(tokens[2]);
+                return new Vector330Class(x, y);
+            }
+            else{
+                long x = Long.parseLong(tokens[1]);
+                long y = Long.parseLong(tokens[2]);
+                return new Vector330Class(x, y);
+            }
         }
-        return  new Vector330Class(integers[0], integers[1]);
+        else{
+
+            int x = Integer.parseInt(tokens[1]);
+            int y = Integer.parseInt(tokens[2]);
+            return new Vector330Class(x, y);
+
+        }
+    }
+    /**
+     * isNumber() - detect if input string is a integer by throwing & catching exception
+     *
+     * @return a true if string is an int, false if otherwise
+     */
+    public static boolean isNumber(String str) {
+        try {
+            double v = Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+        }
+        return false;
+    }
+    /**
+     * isLong() - detect if input string is a long by throwing & catching exception
+     *
+     * @return a true if string is an long, false if otherwise
+     */
+    public static boolean isLong(String str) {
+        try {
+            Long v = Long.parseLong(str);
+            return true;
+        } catch (NumberFormatException nfe) {
+        }
+        return false;
     }
 }
