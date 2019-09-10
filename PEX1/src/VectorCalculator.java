@@ -15,17 +15,17 @@ public class VectorCalculator {
      * @param args - unused
      */
     public static void main(java.lang.String[] args) {
-        Pattern startTokens = Pattern.compile("exit|<|\\d|\\||dir|unit");
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner
-        System.out.println("Enter vector");
-        Vector330Class newVector = Vector330Class.parseVector(myObj);
-        System.out.println(newVector.getX());
-        System.out.println(newVector.getY());
-        System.out.println(newVector.magnitude());
+        Pattern startTokens = Pattern.compile("exit|<|[0-9]+[.[0-9]+]?|\\||dir|unit");
+//        Scanner myObj = new Scanner(System.in);  // Create a Scanner
+//        Vector330Class newVector = Vector330Class.parseVector(myObj);
+//        System.out.println(newVector.getX());
+//        System.out.println(newVector.getY());
+//        System.out.println(newVector.magnitude());
         boolean done = false;
-        myObj.close();
+//        myObj.close();
         Scanner cmdScanner = new Scanner(System.in);
         while(!done){
+            System.out.println("Enter vector");
             String cmdString = cmdScanner.nextLine();
             Scanner cmdLineScanner = new Scanner(cmdString);
 
@@ -41,6 +41,7 @@ public class VectorCalculator {
                 System.out.println("Malformed Request");
             }
         }
+        System.out.println("Exiting Vector Calc");
 
     }
 
@@ -49,7 +50,9 @@ public class VectorCalculator {
      * @param s - Scanner from which input expressions are taken
      */
     private static void parseDirectionExpression(java.util.Scanner s){
-
+        s.hasNext("dir ");
+        s.next("dir");
+        System.out.println((Vector330Class.parseVector(s)).direction());
     }
 
     /**
@@ -79,7 +82,9 @@ public class VectorCalculator {
      * @param s - Scanner from which input expressions are taken
      */
     private static void parseNormalizeExpression(java.util.Scanner s){
-
+        s.hasNext("unit ");
+        s.next("unit");
+        System.out.println((Vector330Class.parseVector(s)).normalize());
     }
 
     /**
@@ -87,7 +92,11 @@ public class VectorCalculator {
      * @param s - Scanner from which input expressions are taken
      */
     private static void parseNormExpression(java.util.Scanner s){
-
+        s.hasNext("\\|");
+        s.next("\\|");
+//        s.hasNext("| ");
+//        s.next("|");
+        System.out.println((Vector330Class.parseVector(s)).magnitude());
     }
 
     /**
@@ -95,7 +104,11 @@ public class VectorCalculator {
      * @param s - Scanner from which input expressions are taken
      */
     private static void parseScaleExpression(java.util.Scanner s){
-
+        s.hasNextDouble();
+        double mult = s.nextDouble();
+        s.hasNext("\\*");
+        s.next("\\*");
+        System.out.println((Vector330Class.parseVector(s)).scale(mult));
     }
 
     /**
