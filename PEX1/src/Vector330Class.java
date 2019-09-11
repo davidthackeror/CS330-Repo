@@ -242,7 +242,7 @@ public class Vector330Class {
      * @param s - the scanner object from which to read the string
      * @return a new Vector330Class object based on the provided input
      */
-    public static Vector330Class parseVector(java.util.Scanner s) {
+    public static Vector330Class parseVector(java.util.Scanner s) throws Exception {
         double x = 0;
         double y = 0;
         Pattern ogPattern = s.delimiter();
@@ -258,16 +258,16 @@ public class Vector330Class {
                         y = s.nextDouble();
                     }
                     else{
-                        System.out.println("Malformed Request in y coord");
+                        throw new Exception(String.valueOf(s));
                     }
                 } else {
-                    System.out.println("Malformed Request in comma");
+                    throw new Exception(String.valueOf(s));
                 }
             } else {
-                System.out.println("Malformed Request in x coord");
+                throw new Exception(String.valueOf(s));
             }
         } else {
-            System.out.println("Malformed Request");
+            throw new Exception(String.valueOf(s));
         }
         return new Vector330Class(x, y);
     }

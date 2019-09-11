@@ -34,7 +34,12 @@ public class VectorCalculator {
                     done = true;
                 }
                 else{
-                    parseExpression(cmdLineScanner);
+                    try{
+                        parseExpression(cmdLineScanner);
+                    } catch (Exception e) {
+                        System.out.println("That was a malformed instruction, please try again");
+                    }
+
                 }
             }
             else{
@@ -49,7 +54,7 @@ public class VectorCalculator {
      * parseDirectionExpression() - parses vector expression provided by scanner
      * @param s - Scanner from which input expressions are taken
      */
-    private static void parseDirectionExpression(java.util.Scanner s){
+    private static void parseDirectionExpression(java.util.Scanner s) throws Exception {
         s.hasNext("dir ");
         s.next("dir");
         System.out.println((Vector330Class.parseVector(s)).direction());
@@ -59,7 +64,7 @@ public class VectorCalculator {
      * parseExpression() - parses vector expression provided by the Scanner s.
      * @param s - Scanner from which input expressions are taken
      */
-    private static void parseExpression(java.util.Scanner s){
+    private static void parseExpression(java.util.Scanner s) throws Exception {
         if(s.hasNext("\\|")){
             parseNormExpression(s);
         }
@@ -81,7 +86,7 @@ public class VectorCalculator {
      * parseNormalizeExpression() - parses expression to compute a normalized vector; that is, a vector with same direction as input but with magnitude of 1
      * @param s - Scanner from which input expressions are taken
      */
-    private static void parseNormalizeExpression(java.util.Scanner s){
+    private static void parseNormalizeExpression(java.util.Scanner s) throws Exception{
         s.hasNext("unit ");
         s.next("unit");
         System.out.println((Vector330Class.parseVector(s)).normalize());
@@ -91,7 +96,7 @@ public class VectorCalculator {
      * parseNormExpression() - parses expression with a "|" indicated a normalized vector
      * @param s - Scanner from which input expressions are taken
      */
-    private static void parseNormExpression(java.util.Scanner s){
+    private static void parseNormExpression(java.util.Scanner s) throws Exception{
         s.hasNext("\\|");
         s.next("\\|");
 //        s.hasNext("| ");
