@@ -1,5 +1,3 @@
-import java.util.Scanner;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -243,8 +241,8 @@ public class Vector330Class {
      * @return a new Vector330Class object based on the provided input
      */
     public static Vector330Class parseVector(java.util.Scanner s) throws Exception {
-        double x = 0;
-        double y = 0;
+        double x;
+        double y;
         Pattern ogPattern = s.delimiter();
         s.useDelimiter("[" + ogPattern + ",]");
         if (s.hasNext("<")) {
