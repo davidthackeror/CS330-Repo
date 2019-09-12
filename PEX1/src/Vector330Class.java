@@ -254,20 +254,26 @@ public class Vector330Class {
                     s.next(",");
                     if(s.hasNextDouble()){
                         y = s.nextDouble();
+                        if (s.hasNext(">")){
+                            s.hasNext(">");
+                            return new Vector330Class(x, y);
+                        }
+                        else{
+                            throw new Exception("PARSE ERROR: Missing '>' to terminate vector");
+                        }
                     }
                     else{
-                        throw new Exception(String.valueOf(s));
+                        throw new Exception("PARSE ERROR: Missing Y coord in vector");
                     }
                 } else {
-                    throw new Exception(String.valueOf(s));
+                    throw new Exception("PARSE ERROR: Missing ',' coord in vector");
                 }
             } else {
-                throw new Exception(String.valueOf(s));
+                throw new Exception("PARSE ERROR: Missing X coord in vector");
             }
         } else {
-            throw new Exception(String.valueOf(s));
+            throw new Exception("PARSE ERROR: Missing '<' in vector");
         }
-        return new Vector330Class(x, y);
     }
 
 }

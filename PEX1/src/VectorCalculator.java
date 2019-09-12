@@ -37,7 +37,7 @@ public class VectorCalculator {
                     try{
                         parseExpression(cmdLineScanner);
                     }catch (Exception e){
-                        System.out.println("Something went wrong, you probably have a malformed string, try again.");
+                        System.out.println(e.getMessage());
                     }
                 }
             }
