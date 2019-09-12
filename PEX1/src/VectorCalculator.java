@@ -122,7 +122,6 @@ public class VectorCalculator {
      */
     private static void parseVectorExpression(Scanner s) throws Exception {
         Vector330Class firstVector = Vector330Class.parseVector(s);
-        System.out.println(firstVector.getX() + " " + firstVector.getY());
         s.next(">");
         if(s.hasNext("[+-.]")){
             String operator = s.next("[+-.]");
@@ -138,6 +137,9 @@ public class VectorCalculator {
             if(operator.equals(".")){
                 System.out.println("Result: " + firstVector.dotProduct(secondVector));
             }
+        }
+        else{
+            throw new Exception("PARSE ERROR: Missing or incorrect operation identifier.");
         }
 
     }
