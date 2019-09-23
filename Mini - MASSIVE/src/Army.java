@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Date: 22 Sept 19
  * Class: CS330
  */
-public class Army extends Battle{
+public class Army{
     private int numWarriors;
     private int allianceNum;
     private int numArchers;

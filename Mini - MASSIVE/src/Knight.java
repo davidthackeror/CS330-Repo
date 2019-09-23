@@ -19,7 +19,13 @@ class Knight extends Warrior{
     public String getName() { return Knight.name; }
 
     @Override
-    public void move() {
+    public void move(int xTarget, int yTarget) {
+        Vector330Class unitVector = new Vector330Class(xTarget- this.getxPos(), yTarget - this.getyPos());
+        Vector330Class unit = unitVector.normalize();
+        double xShift = (unit.getX() * this.getSpeed());
+        double yShift = (unit.getY() * this.getSpeed());
+        this.setxPos((int) (xShift + this.getxPos()));
+        this.setyPos( (int) yShift+ this.getyPos());
 
     }
 

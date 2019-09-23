@@ -48,8 +48,9 @@ public class Main
                     (allies.getNumWarriors() + axis.getNumWarriors())  + " soldiers alive");
 
             panel.setBackground(Color.WHITE);  // clear old display
-
-            drawWarriors(g, axis, allies);
+//            Battle.attackWarriors(axis, allies);
+            Battle.moveWarriors(axis, allies);
+            Battle.drawWarriors(g, axis, allies);
 
             panel.copyGraphicsToScreen();  // update display
             panel.sleep(TIME_STEP);  // delay for time step
@@ -62,16 +63,5 @@ public class Main
 
     }
 
-    private static void drawWarriors(Graphics2D g, Army axis, Army allies) {
 
-        for (int i = 0; i < allies.getNumWarriors(); i++) {
-            allies.soldiers.get(i).draw(g);
-        }
-
-
-        for (int i = 0; i < axis.getNumWarriors(); i++) {
-            axis.soldiers.get(i).draw(g);
-
-        }
-    }
 }

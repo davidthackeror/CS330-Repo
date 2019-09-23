@@ -56,7 +56,7 @@ public abstract class Warrior {
     //getter and setter methods
     public abstract String getName();
 
-    public abstract void move();
+    public abstract void move(int xTarget, int yTarget);
 
 
     public int getxPos() {
