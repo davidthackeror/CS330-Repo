@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Date: 22 Sept 19
  * Class: CS330
  */
-public class Army {
+public class Army extends Battle{
     private int numWarriors;
     private int allianceNum;
     private int numArchers;
@@ -28,6 +28,7 @@ public class Army {
         this.allianceNum = allianceNum;
         for (int i = 0; i < numArchers; i++) {
             soldiers.add(new Archer());
+
         }
         for (int i = 0; i < numKnights; i++) {
             soldiers.add(new Knight());
@@ -75,12 +76,20 @@ public class Army {
         this.numKnights = numKnights;
     }
 
-
     public int getNumDragons() {
         return numDragons;
     }
 
     public void setNumDragons(int numDragons) {
         this.numDragons = numDragons;
+    }
+
+
+    public int getNumOrcs() {
+        return numOrcs;
+    }
+
+    public void setNumOrcs(int numOrcs) {
+        this.numOrcs = numOrcs;
     }
 }

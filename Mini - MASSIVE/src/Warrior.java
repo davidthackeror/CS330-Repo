@@ -6,7 +6,7 @@ import java.util.Random;
  * Class: CS330
  */
 
-public class Warrior {
+public abstract class Warrior {
 
     Random rand = new Random();
     int archerMinCourage = 10;
@@ -48,6 +48,13 @@ public class Warrior {
         this.speed = speed;
         this.size = size;
     }
+
+    //getter and setter methods
+    public abstract String getName();
+
+    public abstract void move();
+
+
     public int getxPos() {
         return xPos;
     }
@@ -110,73 +117,6 @@ public class Warrior {
     public void setRange(int range) {
         this.range = range;
     }
-}
 
-class Archer extends Warrior{
-    private int range;
-    Archer() {
-        super();
-        this.setHealth(50);
-        this.setRange(10);
-        this.setCourage(rand.nextInt(archerMaxCourage-archerMinCourage)+ archerMinCourage);
-        this.setAttack(rand.nextInt(archerMaxAttack-archerMinAttack)+archerMinAttack);
-        this.setSize(10);
-        this.setSpeed(4);
-    }
-
-}
-
-class Orc extends Warrior{
-    Orc(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack){
-        super();
-        this.setRange(1);
-        this.setAttack(rand.nextInt(maxAttack-minAttack)+minAttack);
-        this.setSpeed(rand.nextInt(maxSpeed-minSpeed)+minSpeed);
-        this.setCourage(rand.nextInt(maxCourage-minCourage)+minCourage);
-        this.setHealth(rand.nextInt(maxHealth-minHealth)+minHealth);
-        this.setSize(size);
-    }
-}
-
-class Ogre extends Orc{
-
-    Ogre(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack) {
-        super(minHealth*2, maxHealth*2, minSpeed/2, maxSpeed/2, minCourage, maxCourage*2, size*2, minAttack*2, maxAttack*2);
-    }
-}
-
-class Knight extends Warrior{
-    Knight(){
-        super();
-        this.setRange(1);
-        this.setHealth(rand.nextInt(knightMaxHealth-knightMinHealth)+knightMinHealth);
-        this.setCourage(rand.nextInt(knightMaxCourage-knightMinCourage)+ knightMinCourage);
-        this.setAttack(rand.nextInt(knightMaxAttack-knightMinAttack)+knightMinAttack);
-        this.setSize(15);
-        this.setSpeed(2);
-    }
-}
-
-class Dragon extends Warrior{
-    private int luckyArrow = 0;
-
-    Dragon(){
-        super();
-        this.setHealth(500);
-        this.setRange(9);
-        this.setCourage(100);
-        this.setAttack(100);
-        this.setSize(75);
-        this.setSpeed(6);
-    }
-
-
-    public int getLuckyArrow() {
-        return luckyArrow;
-    }
-
-    public void setLuckyArrow(int luckyArrow) {
-        this.luckyArrow = luckyArrow;
-    }
 }
 

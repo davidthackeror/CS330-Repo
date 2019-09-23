@@ -1,3 +1,5 @@
+import java.awt.*;
+
 /**
  * Project: Mini - MASSIVE
  * @author David Thacker
@@ -5,4 +7,10 @@
  * Class: CS330
  */
 public class Battle {
+
+    private static void Battle(Warrior allies, Warrior axis){
+        for (int i = 0; i < allies.getSize() + axis.getSize(); i++) {
+
+        }
+    }
 }
