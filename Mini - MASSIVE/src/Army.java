@@ -34,10 +34,10 @@ public class Army extends Battle{
             soldiers.add(new Knight());
         }
         for (int i = 0; i < numOrcs; i++) {
-            soldiers.add(new Orc(50,150,3,5,10,20,25,40,50));
+            soldiers.add(new Orc(50,150,3,5,10,20,20,40,50));
         }
         for (int i = 0; i < numOgres; i++) {
-            soldiers.add(new Ogre(50,150,3,5,10,20,25,40,50));
+            soldiers.add(new Ogre(50,150,3,5,10,20,20,40,50));
         }
         for (int i = 0; i < numDragons; i++) {
             soldiers.add(new Dragon());

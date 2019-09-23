@@ -12,7 +12,7 @@ public class Main
     private static final int TIME_STEP = 100;
 
     public static void main(String[] args){
-        Army allies = new Army(10,0, 5 ,5,0,0,0);
+        Army allies = new Army(15,0, 10 ,5,0,0,0);
 
         for (int i = 0; i < allies.getNumWarriors(); i++) {
             System.out.println("Allegiance of " + i + " is " + allies.getAllianceNum());
@@ -49,7 +49,7 @@ public class Main
 
             panel.setBackground(Color.WHITE);  // clear old display
 
-            Battle(allies, axis);
+            drawWarriors(g, axis, allies);
 
             panel.copyGraphicsToScreen();  // update display
             panel.sleep(TIME_STEP);  // delay for time step
@@ -60,5 +60,18 @@ public class Main
 
 
 
+    }
+
+    private static void drawWarriors(Graphics2D g, Army axis, Army allies) {
+
+        for (int i = 0; i < allies.getNumWarriors(); i++) {
+            allies.soldiers.get(i).draw(g);
+        }
+
+
+        for (int i = 0; i < axis.getNumWarriors(); i++) {
+            axis.soldiers.get(i).draw(g);
+
+        }
     }
 }

@@ -6,6 +6,7 @@ class Ogre extends Orc{
         super(minHealth*2, maxHealth*2, minSpeed/2, maxSpeed/2, minCourage, maxCourage*2, size*2, minAttack*2, maxAttack*2);
     }
 
+
     public String getName() { return Ogre.name; }
 
 }

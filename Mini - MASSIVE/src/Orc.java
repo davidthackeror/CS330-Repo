@@ -1,8 +1,11 @@
+import java.awt.*;
+
 class Orc extends Warrior{
     private static String name = "Orc";
 
     Orc(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack){
         super();
+        this.setColor(Color.black);
         this.setxPos(rand.nextInt(400)+600);
         this.setyPos(rand.nextInt(400)+600);
         this.setRange(1);
@@ -20,4 +23,13 @@ class Orc extends Warrior{
 
     }
 
+    @Override
+    public void draw(Graphics2D g) {
+        {
+
+            g.setColor(this.getColor());
+            g.fillOval(this.getxPos()-this.getSize(), this.getyPos()-this.getSize(),
+                    this.getSize()*2, this.getSize()*2);
+        }
+    }
 }

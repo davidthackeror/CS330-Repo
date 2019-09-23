@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Random;
 /**
  * Project: Mini - MASSIVE
@@ -28,6 +29,7 @@ public abstract class Warrior {
     private int courage;
     private int speed;
     private int size;
+    private Color color;
 
     Warrior() {
         this.xPos = 0;
@@ -37,9 +39,10 @@ public abstract class Warrior {
         this.courage = 0;
         this.speed = 0;
         this.size = 0;
+        this.color = color;
     }
 
-    public Warrior(int xPos, int yPos, int health, int attack, int courage, int speed, int size){
+    public Warrior(int xPos, int yPos, int health, int attack, int courage, int speed, int size, Color color){
         this.xPos = xPos;
         this.yPos = yPos;
         this.health = health;
@@ -47,6 +50,7 @@ public abstract class Warrior {
         this.courage = courage;
         this.speed = speed;
         this.size = size;
+        this.color = color;
     }
 
     //getter and setter methods
@@ -116,6 +120,16 @@ public abstract class Warrior {
 
     public void setRange(int range) {
         this.range = range;
+    }
+
+    public abstract void draw(Graphics2D g);
+
+    public void setColor(Color color){
+        this.color = color;
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 
 }

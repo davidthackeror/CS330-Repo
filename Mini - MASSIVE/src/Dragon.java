@@ -1,3 +1,5 @@
+import java.awt.*;
+
 class Dragon extends Warrior{
     private static String name = "Dragon";
 
@@ -5,6 +7,7 @@ class Dragon extends Warrior{
 
     Dragon(){
         super();
+        this.setColor(Color.red);
         this.setxPos(rand.nextInt(400)+600);
         this.setyPos(rand.nextInt(400)+600);
         this.setHealth(500);
@@ -31,4 +34,13 @@ class Dragon extends Warrior{
 
     }
 
+    @Override
+    public void draw(Graphics2D g) {
+        {
+
+            g.setColor(this.getColor());
+            g.fillOval(this.getxPos()-this.getSize(), this.getyPos()-this.getSize(),
+                    this.getSize()*2, this.getSize()*2);
+        }
+    }
 }
