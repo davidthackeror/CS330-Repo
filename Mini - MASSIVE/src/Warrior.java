@@ -13,7 +13,7 @@ public abstract class Warrior {
     int archerMinCourage = 10;
     int archerMaxCourage = 30;
     int archerMinAttack = 10;
-    int archerMaxAttack = 20;
+    int archerMaxAttack = 15;
     int knightMinCourage = 45;
     int knightMaxCourage = 75;
     int knightMinAttack = 40;
@@ -32,6 +32,7 @@ public abstract class Warrior {
     private int speed;
     private int size;
     private Color color;
+    private int fearCountdown;
 
     Warrior() {
         this.xPos = 0;

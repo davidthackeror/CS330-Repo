@@ -5,9 +5,7 @@ class Knight extends Warrior{
 
     Knight(){
         super();
-        this.setColor(Color.yellow);
-        this.setxPos(rand.nextInt(400));
-        this.setyPos(rand.nextInt(Main.SIZE));
+
         this.setRange(1);
         this.setHealth(rand.nextInt(knightMaxHealth-knightMinHealth)+knightMinHealth);
         this.setCourage(rand.nextInt(knightMaxCourage-knightMinCourage)+ knightMinCourage);

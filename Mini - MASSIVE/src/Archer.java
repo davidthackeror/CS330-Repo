@@ -5,11 +5,10 @@ class Archer extends Warrior{
 
     Archer() {
         super();
-        this.setColor(Color.gray);
-        this.setxPos(rand.nextInt(400));
-        this.setyPos(rand.nextInt(Main.SIZE));
+
+
         this.setHealth(50);
-        this.setRange(50);
+        this.setRange(40);
         this.setCourage(rand.nextInt(archerMaxCourage-archerMinCourage)+ archerMinCourage);
         this.setAttack(rand.nextInt(archerMaxAttack-archerMinAttack)+archerMinAttack);
         this.setSize(10);

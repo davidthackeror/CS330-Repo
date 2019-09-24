@@ -12,7 +12,7 @@ public class Main
     private static final int TIME_STEP = 100;
 
     public static void main(String[] args){
-        Army allies = new Army(15,0, 10 ,5,0,0,0);
+        Army allies = new Army(0, 20 ,30,0,0,0);
 //
 //        for (int i = 0; i < allies.getNumWarriors(); i++) {
 //            System.out.println("Allegiance of " + i + " is " + allies.getAllianceNum());
@@ -25,7 +25,7 @@ public class Main
 //            System.out.println();
 //        }
 
-        Army axis = new Army(16,1,0,0,1,10,5);
+        Army axis = new Army(1,10,0,2,20,10);
 
 //        for (int i = 0; i < axis.getNumWarriors(); i++) {
 //            System.out.println("Allegiance of " + i + " is " + axis.getAllianceNum());
@@ -79,7 +79,6 @@ public class Main
 
 }
 
-//TODO implement courage
 //TODO implement lucky arrow
 //TODO balance out units
 //TODO implement images

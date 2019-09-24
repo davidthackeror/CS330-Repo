@@ -6,9 +6,6 @@ class Ogre extends Warrior{
     private int ogreMult = 2;
     Ogre(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack){
         super();
-        this.setColor(Color.black);
-        this.setxPos(rand.nextInt(400)+600);
-        this.setyPos(rand.nextInt(Main.SIZE));
         this.setRange(1);
         this.setAttack(ogreMult * rand.nextInt(maxAttack-minAttack)+minAttack);
         this.setSpeed((rand.nextInt(maxSpeed-minSpeed)+minSpeed)/ ogreMult);

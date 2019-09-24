@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Project: Mini - MASSIVE
@@ -29,50 +31,81 @@ public class Battle {
         return index;
     }
 
+    static boolean outOfBounds(Warrior attacker){
+        if(attacker.getxPos() > Main.SIZE || attacker.getyPos() > Main.SIZE || attacker.getxPos() < 0 || attacker.getyPos() < 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     static void moveWarriors(Army axis, Army allies){
-        for (int i = 0; i < allies.getNumWarriors(); i++) {
+        Random rand = new Random();
+        for (int i = 0; i < allies.soldiers.size(); i++) {
             if(allies.soldiers.get(i).isAlive() && allies.soldiers.get(i).isMoving()) {
-                int index = detectEnemy(allies.soldiers.get(i), axis);
-                try{
-                    if (index == -1){
-                        throw new Exception("That does not exist.");
+                if (outOfBounds(allies.soldiers.get(i))) {
+                    allies.soldiers.get(i).setAlive(false);
+                } else {
+                    int index = detectEnemy(allies.soldiers.get(i), axis);
+                    try {
+                        if (index == -1) {
+                            throw new Exception("That does not exist.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("An index of the nearest soldier was not found");
+                        break;
+                    }
+                    int cowardice = 100 * (1 - allies.soldiers.get(i).getCourage());
+                    if(rand.nextInt(100) <= cowardice ){
+                        allies.soldiers.get(i).move(-(axis.soldiers.get(index).getxPos()), (-(axis.soldiers.get(index).getyPos())));
+
+                    }
+                    else{
+                        allies.soldiers.get(i).move(axis.soldiers.get(index).getxPos(), axis.soldiers.get(index).getyPos());
+
                     }
                 }
-                catch (Exception e){
-                    System.out.println("An index of the nearest soldier was not found");
-                    break;
-                }
-                allies.soldiers.get(i).move(axis.soldiers.get(index).getxPos(), axis.soldiers.get(index).getyPos());
             }
         }
 
 
-        for (int i = 0; i < axis.getNumWarriors(); i++) {
-            if(axis.soldiers.get(i).isAlive() && axis.soldiers.get(i).isMoving()){
-                int index = detectEnemy(axis.soldiers.get(i), allies);
-                try{
-                    if (index == -1){
-                        throw new Exception("That does not exist.");
+        for (int i = 0; i < axis.soldiers.size(); i++) {
+            if(axis.soldiers.get(i).isAlive() && axis.soldiers.get(i).isMoving()) {
+                if (outOfBounds(axis.soldiers.get(i))) {
+                    axis.soldiers.get(i).setAlive(false);
+                } else {
+                    int index = detectEnemy(axis.soldiers.get(i), allies);
+                    try {
+                        if (index == -1) {
+                            throw new Exception("That does not exist.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("An index of the nearest soldier was not found");
+                        break;
+                    }
+                    int cowardice = (100 - axis.soldiers.get(i).getCourage());
+                    if(rand.nextInt(100) <= cowardice ){
+                        axis.soldiers.get(i).move(-(allies.soldiers.get(index).getxPos()), (-(allies.soldiers.get(index).getyPos())));
+
+                    }
+                    else{
+                        axis.soldiers.get(i).move(allies.soldiers.get(index).getxPos(), allies.soldiers.get(index).getyPos());
                     }
                 }
-                catch (Exception e){
-                    System.out.println("An index of the nearest soldier was not found");
-                    break;
-                }
-                axis.soldiers.get(i).move(allies.soldiers.get(index).getxPos(), allies.soldiers.get(index).getyPos());
             }
         }
     }
     static void drawWarriors(Graphics2D g, Army axis, Army allies) {
 
-        for (int i = 0; i < allies.getNumWarriors(); i++) {
+        for (int i = 0; i < allies.soldiers.size(); i++) {
             if(allies.soldiers.get(i).isAlive()){
                 allies.soldiers.get(i).draw(g);
             }
         }
 
 
-        for (int i = 0; i < axis.getNumWarriors(); i++) {
+        for (int i = 0; i < axis.soldiers.size(); i++) {
             if(axis.soldiers.get(i).isAlive()){
                 axis.soldiers.get(i).draw(g);
             }
@@ -80,7 +113,7 @@ public class Battle {
     }
 
     public static void attackWarriors(Army axis, Army allies) {
-        for (int i = 0; i < allies.getNumWarriors(); i++) {
+        for (int i = 0; i < allies.soldiers.size(); i++) {
             //get the index of the closest enemy
             if(allies.soldiers.get(i).isAlive()) {
                 int index = detectEnemy(allies.soldiers.get(i), axis);
@@ -108,7 +141,7 @@ public class Battle {
             }
         }
 
-        for (int i = 0; i < axis.getNumWarriors(); i++) {
+        for (int i = 0; i < axis.soldiers.size(); i++) {
             //get the index of the closest enemy
             if(axis.soldiers.get(i).isAlive()) {
                 int index = detectEnemy(axis.soldiers.get(i), allies);try{

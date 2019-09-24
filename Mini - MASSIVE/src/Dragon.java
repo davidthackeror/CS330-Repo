@@ -7,7 +7,6 @@ class Dragon extends Warrior{
 
     Dragon(){
         super();
-        this.setColor(Color.red);
         this.setxPos(rand.nextInt(400)+600);
         this.setyPos(rand.nextInt(Main.SIZE));
         this.setHealth(500);
