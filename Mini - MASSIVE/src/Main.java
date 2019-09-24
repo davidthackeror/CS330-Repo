@@ -78,3 +78,9 @@ public class Main
 
 
 }
+
+//TODO implement courage
+//TODO implement lucky arrow
+//TODO balance out units
+//TODO implement images
+
