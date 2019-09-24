@@ -1,13 +1,13 @@
 import java.awt.*;
 
 class Orc extends Warrior{
-    private static String name = "Orc";
+    static String name= "Orc";
 
     Orc(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack){
         super();
-        this.setColor(Color.black);
+        this.setColor(Color.green);
         this.setxPos(rand.nextInt(400)+600);
-        this.setyPos(rand.nextInt(400)+600);
+        this.setyPos(rand.nextInt(Main.SIZE));
         this.setRange(1);
         this.setAttack(rand.nextInt(maxAttack-minAttack)+minAttack);
         this.setSpeed(rand.nextInt(maxSpeed-minSpeed)+minSpeed);
@@ -25,7 +25,7 @@ class Orc extends Warrior{
         double xShift = (unit.getX() * this.getSpeed());
         double yShift = (unit.getY() * this.getSpeed());
         this.setxPos((int) (xShift + this.getxPos()));
-        this.setyPos( (int) yShift+ this.getyPos());
+        this.setyPos((int) (yShift+ this.getyPos()));
 
     }
 

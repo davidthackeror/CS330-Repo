@@ -7,7 +7,7 @@ class Knight extends Warrior{
         super();
         this.setColor(Color.yellow);
         this.setxPos(rand.nextInt(400));
-        this.setyPos(rand.nextInt(400));
+        this.setyPos(rand.nextInt(Main.SIZE));
         this.setRange(1);
         this.setHealth(rand.nextInt(knightMaxHealth-knightMinHealth)+knightMinHealth);
         this.setCourage(rand.nextInt(knightMaxCourage-knightMinCourage)+ knightMinCourage);
@@ -25,7 +25,7 @@ class Knight extends Warrior{
         double xShift = (unit.getX() * this.getSpeed());
         double yShift = (unit.getY() * this.getSpeed());
         this.setxPos((int) (xShift + this.getxPos()));
-        this.setyPos( (int) yShift+ this.getyPos());
+        this.setyPos((int) (yShift+ this.getyPos()));
 
     }
 

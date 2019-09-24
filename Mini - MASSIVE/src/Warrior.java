@@ -12,8 +12,8 @@ public abstract class Warrior {
     Random rand = new Random();
     int archerMinCourage = 10;
     int archerMaxCourage = 30;
-    int archerMinAttack = 30;
-    int archerMaxAttack = 50;
+    int archerMinAttack = 10;
+    int archerMaxAttack = 20;
     int knightMinCourage = 45;
     int knightMaxCourage = 75;
     int knightMinAttack = 40;
@@ -22,6 +22,8 @@ public abstract class Warrior {
     int knightMaxHealth = 150;
 
     private int range;
+    private boolean isMoving;
+    private boolean isAlive;
     private int xPos;
     private int yPos;
     private int health;
@@ -40,9 +42,11 @@ public abstract class Warrior {
         this.speed = 0;
         this.size = 0;
         this.color = color;
+        this.isMoving = true;
+        this.isAlive = true;
     }
 
-    public Warrior(int xPos, int yPos, int health, int attack, int courage, int speed, int size, Color color){
+    public Warrior(int xPos, int yPos, int health, int attack, int courage, int speed, int size, Color color, boolean isMoving, boolean isAlive){
         this.xPos = xPos;
         this.yPos = yPos;
         this.health = health;
@@ -51,6 +55,9 @@ public abstract class Warrior {
         this.speed = speed;
         this.size = size;
         this.color = color;
+        this.isMoving = isMoving;
+        this.isAlive = isAlive;
+
     }
 
     //getter and setter methods
@@ -132,5 +139,20 @@ public abstract class Warrior {
         return this.color;
     }
 
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
 }
 

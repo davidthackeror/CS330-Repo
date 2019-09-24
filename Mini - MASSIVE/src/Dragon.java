@@ -9,12 +9,12 @@ class Dragon extends Warrior{
         super();
         this.setColor(Color.red);
         this.setxPos(rand.nextInt(400)+600);
-        this.setyPos(rand.nextInt(400)+600);
+        this.setyPos(rand.nextInt(Main.SIZE));
         this.setHealth(500);
         this.setRange(9);
         this.setCourage(100);
         this.setAttack(100);
-        this.setSize(75);
+        this.setSize(50);
         this.setSpeed(6);
     }
 
@@ -36,7 +36,7 @@ class Dragon extends Warrior{
         double xShift = (unit.getX() * this.getSpeed());
         double yShift = (unit.getY() * this.getSpeed());
         this.setxPos((int) (xShift + this.getxPos()));
-        this.setyPos( (int) yShift+ this.getyPos());
+        this.setyPos((int) (yShift+ this.getyPos()));
 
     }
 

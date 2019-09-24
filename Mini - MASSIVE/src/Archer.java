@@ -7,9 +7,9 @@ class Archer extends Warrior{
         super();
         this.setColor(Color.gray);
         this.setxPos(rand.nextInt(400));
-        this.setyPos(rand.nextInt(400));
+        this.setyPos(rand.nextInt(Main.SIZE));
         this.setHealth(50);
-        this.setRange(10);
+        this.setRange(50);
         this.setCourage(rand.nextInt(archerMaxCourage-archerMinCourage)+ archerMinCourage);
         this.setAttack(rand.nextInt(archerMaxAttack-archerMinAttack)+archerMinAttack);
         this.setSize(10);
@@ -26,7 +26,7 @@ class Archer extends Warrior{
         double xShift = (unit.getX() * this.getSpeed());
         double yShift = (unit.getY() * this.getSpeed());
         this.setxPos((int) (xShift + this.getxPos()));
-        this.setyPos( (int) yShift+ this.getyPos());
+        this.setyPos((int) (yShift+ this.getyPos()));
 
     }
 

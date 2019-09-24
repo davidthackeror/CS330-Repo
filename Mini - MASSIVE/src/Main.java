@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class Main
 {
-    private static final int SIZE = 1000;
+    protected static final int SIZE = 1000;
     private static final int TIME_STEP = 100;
 
     public static void main(String[] args){
@@ -45,15 +45,28 @@ public class Main
         while (!panel.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON)) {
 
             panel.setWindowTitle("CS330 Mini Massive: " +
-                    (allies.getNumWarriors() + axis.getNumWarriors())  + " soldiers alive");
+                    (allies.numAlive() + axis.numAlive())  + " soldiers alive");
 
             panel.setBackground(Color.WHITE);  // clear old display
 //            Battle.attackWarriors(axis, allies);
+            Battle.attackWarriors(axis, allies);
             Battle.moveWarriors(axis, allies);
             Battle.drawWarriors(g, axis, allies);
 
+
             panel.copyGraphicsToScreen();  // update display
             panel.sleep(TIME_STEP);  // delay for time step
+            if(axis.numAlive() == 0){
+                panel.setWindowTitle("CS330 Mini Massive: Allies has won");
+                panel.sleep(10000);  // delay for time step
+                break;
+            }
+
+            if(allies.numAlive() == 0){
+                panel.setWindowTitle("CS330 Mini Massive: Axis has won");
+                panel.sleep(10000);  // delay for time step
+                break;
+            }
 
         } // end of animation while loop
 

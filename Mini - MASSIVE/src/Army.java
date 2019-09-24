@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * Class: CS330
  */
 public class Army{
+
     private int numWarriors;
     private int allianceNum;
     private int numArchers;
@@ -84,6 +85,15 @@ public class Army{
         this.numDragons = numDragons;
     }
 
+    public int numAlive(){
+        int numAlive = 0;
+        for (int i = 0; i < soldiers.size(); i++) {
+            if(soldiers.get(i).isAlive()){
+                numAlive++;
+            }
+        }
+        return numAlive;
+    }
 
     public int getNumOrcs() {
         return numOrcs;
