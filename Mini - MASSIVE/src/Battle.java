@@ -40,6 +40,7 @@ public class Battle {
                 }
                 catch (Exception e){
                     System.out.println("An index of the nearest soldier was not found");
+                    break;
                 }
                 allies.soldiers.get(i).move(axis.soldiers.get(index).getxPos(), axis.soldiers.get(index).getyPos());
             }
@@ -56,6 +57,7 @@ public class Battle {
                 }
                 catch (Exception e){
                     System.out.println("An index of the nearest soldier was not found");
+                    break;
                 }
                 axis.soldiers.get(i).move(allies.soldiers.get(index).getxPos(), allies.soldiers.get(index).getyPos());
             }
@@ -82,6 +84,15 @@ public class Battle {
             //get the index of the closest enemy
             if(allies.soldiers.get(i).isAlive()) {
                 int index = detectEnemy(allies.soldiers.get(i), axis);
+                try{
+                    if (index == -1){
+                        throw new Exception("That does not exist.");
+                    }
+                }
+                catch (Exception e){
+                    System.out.println("An index of the nearest soldier was not found");
+                    break;
+                }
                 //if the closest enemy is in range of the friendly soldier, attack with your attack stat
                 if(magnitude(allies.soldiers.get(i), axis, index) <= allies.soldiers.get(i).getRange() && axis.soldiers.get(index).isAlive()){
                     //set the enemy soldiers health to the attack - your prevous health
@@ -100,7 +111,15 @@ public class Battle {
         for (int i = 0; i < axis.getNumWarriors(); i++) {
             //get the index of the closest enemy
             if(axis.soldiers.get(i).isAlive()) {
-                int index = detectEnemy(axis.soldiers.get(i), allies);
+                int index = detectEnemy(axis.soldiers.get(i), allies);try{
+                    if (index == -1){
+                        throw new Exception("That does not exist.");
+                    }
+                }
+                catch (Exception e){
+                    System.out.println("An index of the nearest soldier was not found");
+                    break;
+                }
                 //if the closest enemy is in range of the friendly soldier, attack with your attack stat
                 if(magnitude(axis.soldiers.get(i), allies, index) <= axis.soldiers.get(i).getRange() && allies.soldiers.get(index).isAlive()){
                     //set the enemy soldiers health to the attack - your prevous health
