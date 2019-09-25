@@ -13,6 +13,9 @@ public class Army{
 
     private int allianceNum;
     ArrayList<Warrior> soldiers = new ArrayList<Warrior>();
+    Army(){
+
+    }
 
     Army(int allianceNum, int numArchers, int numKnights, int numDragons, int numOrcs, int numOgres) {
         this.allianceNum = allianceNum;

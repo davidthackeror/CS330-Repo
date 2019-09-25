@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 /**
@@ -185,6 +187,46 @@ class OptionPanes {
         return new Army(allianceNumber, fNumArchers, fNumKnights, fNumDragons, fNumOrcs, fNumOgres);
     }
 
+    public static JSlider sliding(final JOptionPane optionPane, int maxNum){
+        JSlider slider = new JSlider(0, maxNum);
+        slider.setMajorTickSpacing(maxNum/10);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+
+        ChangeListener changeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent changeEvent){
+                JSlider theSlider = (JSlider)changeEvent.getSource();
+                if(!theSlider.getValueIsAdjusting()){
+                    optionPane.setInputValue((int)(theSlider.getValue()));
+                }
+            }
+
+        };
+        slider.addChangeListener(changeListener);
+        return slider;
+    }
+
+    public static Army reduxSetValues(int[] stats, String name, int absValue){
+        JPanel pane;
+        pane = new JPanel();
+        pane.setLayout(new GridLayout(0, 2, 2, 2));
+        JOptionPane optionPane = new JOptionPane();
+        JSlider slider = sliding(optionPane, absValue);
+        optionPane.setMessage(new Object[] {"Please enter a health value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[0] = 50;
+        }
+        else{
+            stats [0] = (int) optionPane.getInputValue();
+        }
+
+        return new Army();
+    }
+
     /**
      * setValues() prompts the user with a JOptionPane for all the values in a attribute array for a given warrior class
      *
@@ -192,66 +234,9 @@ class OptionPanes {
      * @param name  the name of the warrior class to be written to
      */
     private static void setValues(int[] stats, String name) {
-        //initalize JFrame values for each variable
-
-        JFrame frame;
-        JPanel pane;
-        JTextField health;
-        JTextField minAttack;
-        JTextField maxAttack;
-        JTextField minSpeed;
-        JTextField maxSpeed;
-        JTextField minCourage;
-        JTextField maxCourage;
-        JTextField size;
-        JTextField range;
-
-
-        pane = new JPanel();
-        pane.setLayout(new GridLayout(0, 2, 2, 2));
-
-        health = new JTextField(5);
-        minAttack = new JTextField(5);
-        maxAttack = new JTextField(5);
-        minSpeed = new JTextField(5);
-        maxSpeed = new JTextField(5);
-        minCourage = new JTextField(5);
-        maxCourage = new JTextField(5);
-        size = new JTextField(5);
-        range = new JTextField(5);
-
-
-        pane.add(new JLabel("Please enter a desired health for this unit."));
-        pane.add(health);
-
-        pane.add(new JLabel("Please enter a minimum attack for this unit."));
-        pane.add(minAttack);
-
-        pane.add(new JLabel("Please enter a maximum attack for this unit."));
-        pane.add(maxAttack);
-
-        pane.add(new JLabel("Please enter a minimum speed for this unit."));
-        pane.add(minSpeed);
-
-        pane.add(new JLabel("Please enter a maximum speed for this unit."));
-        pane.add(maxSpeed);
-
-        pane.add(new JLabel("Please enter a minimum courage for this unit."));
-        pane.add(minCourage);
-
-        pane.add(new JLabel("Please enter a maximum courage for this unit."));
-        pane.add(maxCourage);
-
-        pane.add(new JLabel("Please enter a desired size for this unit."));
-        pane.add(size);
-
-        pane.add(new JLabel("Please enter a desired range for this unit."));
-        pane.add(range);
-
-        frame = new JFrame();
-
-
-        int option = JOptionPane.showConfirmDialog(frame, pane, "Please fill all the fields for " + name, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        for (int i = 0; i < 9; i++) {
+            reduxSetValues(stats[0], name);
+        }
 
         if (option == JOptionPane.YES_OPTION) {
 

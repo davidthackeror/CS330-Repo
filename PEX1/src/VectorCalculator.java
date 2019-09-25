@@ -14,7 +14,7 @@ public class VectorCalculator {
      * main() - reads and processes inputs until exit is entered
      * @param args - unused
      */
-    public static void main(java.lang.String[] args) throws Exception {
+    public static void main(java.lang.String[] args){
         Pattern startTokens = Pattern.compile("exit|<|\\d|\\||dir|unit");
 //        Scanner myObj = new Scanner(System.in);  // Create a Scanner
 //        Vector330Class newVector = Vector330Class.parseVector(myObj);
