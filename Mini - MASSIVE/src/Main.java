@@ -27,7 +27,7 @@ public class Main
         JFrame frame = new JFrame();
         //open a drawing panel
         DrawingPanel panel = new DrawingPanel(SIZE, SIZE);
-        panel.setBackground(Color.WHITE);
+        panel.setBackground(Color.lightGray);
         Graphics2D g = panel.getGraphics();
         //define what the window title is
         panel.setWindowTitle("CS330 Mini Massive: " +
@@ -45,14 +45,16 @@ public class Main
 
         //while the user has not left clicked on the simulation
         while (!panel.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON)) {
+            if(panel.keyHasBeenHit("SPACE")){
 
+            }
             //TODO implement space bar pause
 
             //define what the window title is and update it with live losses
             panel.setWindowTitle("CS330 Mini Massive: " +
                     (allies.numAlive() + axis.numAlive())  + " soldiers alive");
 
-            panel.setBackground(Color.WHITE);  // clear old display
+            panel.setBackground(Color.lightGray);
             //move, attack, and draw the battle
             new Battle(g, allies, axis);
 

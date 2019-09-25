@@ -187,6 +187,12 @@ class OptionPanes {
         return new Army(allianceNumber, fNumArchers, fNumKnights, fNumDragons, fNumOrcs, fNumOgres);
     }
 
+    /**
+     * creates a slider for use in java
+     * @param optionPane the optionPane to be written to
+     * @param maxNum the maximum number allowed on the slider
+     * @return the slider reference
+     */
     public static JSlider sliding(final JOptionPane optionPane, int maxNum){
         JSlider slider = new JSlider(0, maxNum);
         slider.setMajorTickSpacing(maxNum/10);
@@ -206,145 +212,145 @@ class OptionPanes {
         return slider;
     }
 
-    public static Army reduxSetValues(int[] stats, String name, int absValue){
-        JPanel pane;
-        pane = new JPanel();
-        pane.setLayout(new GridLayout(0, 2, 2, 2));
-        JOptionPane optionPane = new JOptionPane();
-        JSlider slider = sliding(optionPane, absValue);
-        optionPane.setMessage(new Object[] {"Please enter a health value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[0] = 50;
-        }
-        else{
-            stats [0] = (int) optionPane.getInputValue();
-        }
-
-        return new Army();
-    }
-
     /**
      * setValues() prompts the user with a JOptionPane for all the values in a attribute array for a given warrior class
      *
      * @param stats the attribute array to be written to
      * @param name  the name of the warrior class to be written to
      */
-    private static void setValues(int[] stats, String name) {
-        for (int i = 0; i < 9; i++) {
-            reduxSetValues(stats[0], name);
+    public static void setValues(int[] stats, String name){
+        JPanel pane;
+        pane = new JPanel();
+        pane.setLayout(new GridLayout(0, 2, 2, 2));
+        JOptionPane optionPane = new JOptionPane();
+        JSlider slider = sliding(optionPane, absHealth);
+        optionPane.setMessage(new Object[] {"Please enter a health value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[0] = absHealth/2;
+        }
+        else{
+            stats [0] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absAttack);
+        optionPane.setMessage(new Object[] {"Please enter a min attack value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[1] = absAttack/2;
+        }
+        else{
+            stats [1] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absAttack);
+        optionPane.setMessage(new Object[] {"Please enter a max attack value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[2] = absAttack/2;
+        }
+        else{
+            stats [2] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absSpeed);
+        optionPane.setMessage(new Object[] {"Please enter a min speed value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[3] = absSpeed/2;
+        }
+        else{
+            stats [3] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absSpeed);
+        optionPane.setMessage(new Object[] {"Please enter a max speed value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[4] = absSpeed/2;
+        }
+        else{
+            stats [4] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absCourage);
+        optionPane.setMessage(new Object[] {"Please enter a min courage value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[5] = absSpeed/2;
+        }
+        else{
+            stats [5] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absSpeed);
+        optionPane.setMessage(new Object[] {"Please enter a max speed value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[6] = absSpeed/2;
+        }
+        else{
+            stats [6] = (int) optionPane.getInputValue();
+        }
+        slider = sliding(optionPane, absSize);
+        optionPane.setMessage(new Object[] {"Please enter a size value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[7] = absSize/2;
+        }
+        else{
+            stats [7] = (int) optionPane.getInputValue();
+
+        }
+        slider = sliding(optionPane, absRange);
+        optionPane.setMessage(new Object[] {"Please enter a range value for a " + name, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            stats[8] = absRange/2;
+        }
+        else{
+            stats [8] = (int) optionPane.getInputValue();
         }
 
-        if (option == JOptionPane.YES_OPTION) {
-
-            String healthInput = health.getText();
-            stats[0] = Integer.parseInt(healthInput);
-            //check to see if the user value is greater than the max
-            if (stats[1] > absHealth) {
-                //if so set it equal to the max
-                stats[1] = absHealth;
-            }
-            if (stats[1] < 0) {
-                //if its less than 0 set it equal to 1
-                stats[1] = 1;
-            }
-
-            String minAttackInput = minAttack.getText();
-            String maxAttackInput = maxAttack.getText();
-            stats[1] = Integer.parseInt(minAttackInput);
-            stats[2] = Integer.parseInt(maxAttackInput);
-            //check to see if the user has put in a value for the min greater than the max
-            if (isMinLargerMax(stats[1], stats[2])) {
-                //if so swap it
-                int temp = stats[1] + 1;
-                stats[1] = stats[2] - 1;
-                stats[2] = temp;
-                //check to see if the user value is greater than the max
-                if (stats[2] > absAttack) {
-                    //if so set it equal to the max
-                    stats[2] = absAttack;
-                }
-                if (stats[1] < 0) {
-                    //if its less than 0 set it equal to 1
-                    stats[1] = 1;
-                }
-            }
-
-            String minSpeedInput = minSpeed.getText();
-            String maxSpeedInput = maxSpeed.getText();
-            stats[3] = Integer.parseInt(minSpeedInput);
-            stats[4] = Integer.parseInt(maxSpeedInput);
-            //check to see if the user has put in a value for the min greater than the max
-            if (isMinLargerMax(stats[3], stats[4])) {
-                //if so swap it
-                int temp = stats[3] + 1;
-                stats[3] = stats[4] - 1;
-                stats[4] = temp;
-                //check to see if the user value is greater than the max
-                if (stats[4] > absSpeed) {
-                    //if so set it equal to the max
-                    stats[4] = absSpeed;
-                }
-                if (stats[4] < 0) {
-                    //if its less than 0 set it equal to 1
-                    stats[4] = 1;
-                }
-            }
-
-            String minCourageInput = minCourage.getText();
-            String maxCourageInput = maxCourage.getText();
-            stats[5] = Integer.parseInt(minCourageInput);
-            stats[6] = Integer.parseInt(maxCourageInput);
-            //check to see if the user has put in a value for the min greater than the max
-            if (isMinLargerMax(stats[5], stats[6])) {
-                //if so swap it
-                int temp = stats[5] + 1;
-                stats[5] = stats[6] - 1;
-                stats[6] = temp;
-                //check to see if the user value is greater than the max
-                if (stats[6] > absCourage) {
-                    //if so set it equal to the max
-                    stats[6] = absCourage;
-                }
-                if (stats[6] < 0) {
-                    //if its less than 0 set it equal to 1
-                    stats[6] = 1;
-                }
-            }
-
-            String sizeInput = size.getText();
-            stats[7] = Integer.parseInt(sizeInput);
-            //check to see if the user value is greater than the max
-            if (stats[7] > absSize) {
-                //if so set it equal to the max
-                stats[7] = absSize;
-            }
-            if (stats[7] < 0) {
-                //if its less than 0 set it equal to 1
-                stats[7] = 1;
-            }
-
-            String rangeInput = range.getText();
-            stats[8] = Integer.parseInt(rangeInput);
-            //check to see if the user value is greater than the max
-            if (stats[8] > absRange) {
-                //if so set it equal to the max
-                stats[8] = absRange;
-            }
-            if (stats[8] < 0) {
-                //if its less than 0 set it equal to 1
-                stats[8] = 1;
-            }
-
-
-        } else {
-            //if the user has decided not to enter anything kick them back to the start pane
-            optionPanes();
+        if(isMinLargerMax(stats[1], stats[2])){
+            int temp = stats[1];
+            stats[1] = stats[2];
+            stats[2] = temp + 2;
         }
+        if(isMinLargerMax(stats[3], stats[4])){
+            int temp = stats[3];
+            stats[3] = stats[4];
+            stats[4] = temp + 1;
+        }
+        if(isMinLargerMax(stats[5], stats[6])){
+            int temp = stats[5];
+            stats[5] = stats[6];
+            stats[6] = temp + 1;
+        }
+
     }
+
 
     /**
      * isMinLargerMax() determines if a user has mistakenly inserted a value larger than the desired max value
@@ -354,6 +360,6 @@ class OptionPanes {
      * @return a true of the supposed min is larger than the supposed max
      */
     private static boolean isMinLargerMax(int maybeMin, int maybeMax) {
-        return maybeMin > maybeMax;
+        return maybeMin >= maybeMax;
     }
 }

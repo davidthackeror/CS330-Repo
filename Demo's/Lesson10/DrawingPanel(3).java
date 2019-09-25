@@ -1,11 +1,9 @@
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.event.MouseInputListener;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+import java.awt.event.*;
+import java.awt.image.*;
+import javax.imageio.*;
+import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  * <hr>
@@ -696,6 +694,7 @@ public class DrawingPanel extends Thread
           application.wait();
         } catch (InterruptedException e) {
         }
+        ;
       }
     } else {
       System.out.printf("%d is an invalid parameter to waitForMouseClick\n",
@@ -942,6 +941,7 @@ public class DrawingPanel extends Thread
         application.wait();
       } catch (InterruptedException e) {
       }
+      ;
     }
   }
 
@@ -994,10 +994,10 @@ public class DrawingPanel extends Thread
    * </pre>
    * 
    * @param whichKeyCode which key to check
-   *
+   * 
    * @return true if the specified key has been hit, false otherwise.
    */
-  public boolean keyHasBeenHit(String whichKeyCode) {
+  public boolean keyHasBeenHit(int whichKeyCode) {
     if (whichKeyCode == ANY_KEY) {
       // if any key is in the active buffer and not down, then return true
       for (int j = 0; j < numberActiveKeys; j++)
