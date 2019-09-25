@@ -9,6 +9,7 @@ import java.awt.*;
  * Class: CS330
  */
 class Orc extends Warrior{
+
     static String name= "Orc";
 
     Orc(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack){

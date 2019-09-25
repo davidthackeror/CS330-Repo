@@ -10,6 +10,7 @@ import java.awt.*;
  * Class: CS330
  */
 class OptionPanes {
+
     //These are the absolute maximums for each stat in the game
     /**
      * the maximum allowed health in the game regardless of user inputs
@@ -371,5 +372,3 @@ class OptionPanes {
         return maybeMin > maybeMax;
     }
 }
-
-

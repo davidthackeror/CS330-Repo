@@ -168,5 +168,4 @@ public class Army{
         }
         return numAlive;
     }
-
 }

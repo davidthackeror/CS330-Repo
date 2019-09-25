@@ -3,7 +3,6 @@ import java.awt.*;
 /**
  * Project: Mini - MASSIVE
  * : The Knight Soldier Sub-Class
- *
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330

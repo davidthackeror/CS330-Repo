@@ -11,7 +11,6 @@ import java.awt.*;
 
 class Ogre extends Warrior{
 
-
     private static String name = "Ogre";
 
     Ogre(int minHealth, int maxHealth, int minSpeed, int maxSpeed, int minCourage, int maxCourage, int size, int minAttack, int maxAttack){

@@ -3,12 +3,12 @@ import java.awt.*;
 /**
  * Project: Mini - MASSIVE
  * : The Dragon Soldier Sub-Class
- *
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330
  */
 class Dragon extends Warrior{
+
     private static String name = "Dragon";
 
     private int luckyArrow = 0;

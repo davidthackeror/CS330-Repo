@@ -46,6 +46,8 @@ public class Main
         //while the user has not left clicked on the simulation
         while (!panel.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON)) {
 
+            //TODO implement space bar pause
+
             //define what the window title is and update it with live losses
             panel.setWindowTitle("CS330 Mini Massive: " +
                     (allies.numAlive() + axis.numAlive())  + " soldiers alive");

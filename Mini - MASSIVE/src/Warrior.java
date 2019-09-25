@@ -314,4 +314,3 @@ public abstract class Warrior {
         isAlive = alive;
     }
 }
-

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 
 public class Vector330Class {
+
     //Tolerance for equality between two vectors
     private static double TOLERANCE = 0.000000001;
     private double x;
@@ -275,5 +276,4 @@ public class Vector330Class {
             throw new Exception("PARSE ERROR: Missing '<' in vector");
         }
     }
-
 }

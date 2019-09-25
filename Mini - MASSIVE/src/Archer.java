@@ -9,6 +9,7 @@ import java.awt.*;
  * Class: CS330
  */
 class Archer extends Warrior{
+
     private static String name = "Archer";
 
     Archer() {
@@ -65,6 +66,4 @@ class Archer extends Warrior{
 
         }
     }
-
-
 }
