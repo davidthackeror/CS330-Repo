@@ -1,9 +1,11 @@
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.*;
-import javax.imageio.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.MouseInputListener;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * <hr>
@@ -694,7 +696,6 @@ public class DrawingPanel extends Thread
           application.wait();
         } catch (InterruptedException e) {
         }
-        ;
       }
     } else {
       System.out.printf("%d is an invalid parameter to waitForMouseClick\n",
@@ -941,7 +942,6 @@ public class DrawingPanel extends Thread
         application.wait();
       } catch (InterruptedException e) {
       }
-      ;
     }
   }
 

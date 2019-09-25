@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * Project: Mini - MASSIVE
+ * : Organizes groups of warriors
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330
@@ -11,49 +12,45 @@ import java.util.Random;
 public class Army{
 
     private int allianceNum;
-    private int numArchers;
-    private int numKnights;
-    private int numDragons;
-    private int numOrcs;
-
     ArrayList<Warrior> soldiers = new ArrayList<Warrior>();
 
-    public Army(){
-        this.allianceNum = 0;
-        this.numArchers = 0;
-        this.numKnights = 0;
-    }
-
-    public Army(int allianceNum, int numArchers, int numKnights, int numDragons, int numOrcs, int numOgres){
+    Army(int allianceNum, int numArchers, int numKnights, int numDragons, int numOrcs, int numOgres) {
         this.allianceNum = allianceNum;
         for (int i = 0; i < numArchers; i++) {
             soldiers.add(new Archer());
-            soldiers.get(i).setxPos(generateX(allianceNum));
-            soldiers.get(i).setyPos(generateY(allianceNum));
+            soldiers.get(soldiers.size() - 1).setxPos(generateX(allianceNum));
+            soldiers.get(soldiers.size() - 1).setyPos(generateY(allianceNum));
         }
         for (int i = 0; i < numKnights; i++) {
             soldiers.add(new Knight());
-            soldiers.get(i).setxPos(generateX(allianceNum));
-            soldiers.get(i).setyPos(generateY(allianceNum));
+            soldiers.get(soldiers.size() - 1).setxPos(generateX(allianceNum));
+            soldiers.get(soldiers.size() - 1).setyPos(generateY(allianceNum));
         }
         for (int i = 0; i < numOrcs; i++) {
-            soldiers.add(new Orc(50,200,3,6,10,20,20,40,50));
-            soldiers.get(i).setxPos(generateX(allianceNum));
-            soldiers.get(i).setyPos(generateY(allianceNum));
+            soldiers.add(new Orc(50, 250, 3, 6, 10, 60, 20, 40, 50));
+            soldiers.get(soldiers.size() - 1).setxPos(generateX(allianceNum));
+            soldiers.get(soldiers.size() - 1).setyPos(generateY(allianceNum));
         }
         for (int i = 0; i < numOgres; i++) {
-            soldiers.add(new Ogre(100,200,3,12,10,20,20,40,50));
-            soldiers.get(i).setxPos(generateX(allianceNum));
-            soldiers.get(i).setyPos(generateY(allianceNum));
+            soldiers.add(new Ogre(100, 250, 3, 12, 10, 60, 20, 40, 50));
+            soldiers.get(soldiers.size() - 1).setxPos(generateX(allianceNum));
+            soldiers.get(soldiers.size() - 1).setyPos(generateY(allianceNum));
         }
         for (int i = 0; i < numDragons; i++) {
             soldiers.add(new Dragon());
-            soldiers.get(i).setxPos(generateX(allianceNum));
-            soldiers.get(i).setyPos(generateY(allianceNum));
+            soldiers.get(soldiers.size() - 1).setxPos(generateX(allianceNum));
+            soldiers.get(soldiers.size() - 1).setyPos(generateY(allianceNum));
         }
         setAllianceColor(allianceNum, soldiers);
 
     }
+
+    /**
+     * setAllianceColor() assigns the colors of the alliance to all warriors in that alliance
+     *
+     * @param allianceNum the selected alliance between 0 and 3 (max of 4 armies)
+     * @param soldiers    the soldiers of the army to have their color set
+     */
     private static void setAllianceColor(int allianceNum, ArrayList<Warrior> soldiers){
         switch (allianceNum) {
             case 0:
@@ -83,7 +80,15 @@ public class Army{
                 break;
         }
     }
-    private static int getRandomNumberInRange(int min, int max) {
+
+    /**
+     * getRandomNumberInRange() gets a random number bounded between the selected min and max
+     *
+     * @param min the minimum number to have the range bounded by
+     * @param max the maximum number to have the range bounded by
+     * @return the generated random number
+     */
+    static int getRandomNumberInRange(int min, int max) {
 
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");
@@ -93,12 +98,18 @@ public class Army{
         return r.nextInt((max - min) + 1) + min;
     }
 
-    public int generateX(int allianceNum){
+    /**
+     * generateX() creates a random x value based on the spawn point of its alliance
+     *
+     * @param allianceNum the selected alliance between 0 and 3 (max of 4 armies)
+     * @return a random x value based on the spawn points for that alliance number
+     */
+    private int generateX(int allianceNum){
         Random rand = new Random();
         switch (allianceNum) {
             case 0:
             case 2:
-                return getRandomNumberInRange(0,Main.SIZE);
+                return getRandomNumberInRange(40,Main.SIZE/2);
             case 1:
             case 3:
                 return getRandomNumberInRange(Main.SIZE /2, Main.SIZE);
@@ -108,67 +119,54 @@ public class Army{
 
     }
 
-    public int generateY(int allianceNum){
-            Random rand = new Random();
-            switch (allianceNum) {
-                case 0:
-                case 3:
-                    return getRandomNumberInRange(0,Main.SIZE);
-                case 1:
-                case 2:
-                    return getRandomNumberInRange(Main.SIZE /2, Main.SIZE);
-                default:
-                    return 0;
-            }
+    /**
+     * generateY() creates a random y value based on the spawn point of its alliance
+     *
+     * @param allianceNum the selected alliance between 0 and 3 (max of 4 armies)
+     * @return a random y value based on the spawn points for that alliance number
+     */
+    private int generateY(int allianceNum){
+        Random rand = new Random();
+        switch (allianceNum) {
+            case 0:
+            case 3:
+                return getRandomNumberInRange(40,Main.SIZE/2);
+            case 1:
+            case 2:
+                return getRandomNumberInRange(Main.SIZE /2, Main.SIZE);
+            default:
+                return 0;
+        }
     }
 
+    /**
+     * getAllianceNum() fetches a armies alliance number
+     * @return the armies alliance number
+     */
     public int getAllianceNum() {
         return allianceNum;
     }
 
+    /**
+     * setAllianceNum() sets a armies alliance number
+     * @param allianceNum the new alliance number to be assigned
+     */
     public void setAllianceNum(int allianceNum) {
         this.allianceNum = allianceNum;
     }
 
-    public int getNumArchers() {
-        return numArchers;
-    }
-
-    public void setNumArchers(int numArchers) {
-        this.numArchers = numArchers;
-    }
-
-    public int getNumKnights() {
-        return numKnights;
-    }
-
-    public void setNumKnights(int numKnights) {
-        this.numKnights = numKnights;
-    }
-
-    public int getNumDragons() {
-        return numDragons;
-    }
-
-    public void setNumDragons(int numDragons) {
-        this.numDragons = numDragons;
-    }
-
-    public int numAlive(){
+    /**
+     * numAlive() fetches the number of warriors in an army with a health greater than 0
+     * @return the number of soldiers with health greater than 0
+     */
+    int numAlive(){
         int numAlive = 0;
-        for (int i = 0; i < soldiers.size(); i++) {
-            if(soldiers.get(i).isAlive()){
+        for (Warrior soldier : soldiers) {
+            if (soldier.isAlive()) {
                 numAlive++;
             }
         }
         return numAlive;
     }
 
-    public int getNumOrcs() {
-        return numOrcs;
-    }
-
-    public void setNumOrcs(int numOrcs) {
-        this.numOrcs = numOrcs;
-    }
 }

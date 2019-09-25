@@ -2,6 +2,7 @@ import java.util.regex.Pattern;
 
 /**
  * Project: Mini - MASSIVE
+ * : Determines the distance and directions of soldiers in vector form
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330
@@ -226,7 +227,7 @@ public class Vector330Class {
     /**
      * toString() - override the default toString() method in java to produce an angle bracket version of vector
      *
-     * @return string representation of the vector in the form of <x,y>
+     * @return string representation of the vector in the form of '<x,y>'
      */
     public String toString() {
         return "< " + this.x + ", " + this.y + " >";
@@ -234,7 +235,7 @@ public class Vector330Class {
 
     /**
      * parseVector() - inputs a scanner object which it reads and parses the string representing the vector with the form
-     * of < x, y >
+     * of '< x, y >'
      *
      * @param s - the scanner object from which to read the string
      * @return a new Vector330Class object based on the provided input
