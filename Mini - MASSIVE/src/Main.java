@@ -3,18 +3,18 @@ import java.awt.*;
 
 /**
  * Project: Mini - MASSIVE
+ *
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330
  */
-public class Main
-{
+public class Main {
     //determines the size of the graphics display window
     static final int SIZE = 1000;
     //the time to wait between drawing on screen and moving to next tick
     private static final int TIME_STEP = 100;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         //call for preset values or not user selected values for each warrior class
         OptionPanes.optionPanes();
@@ -40,19 +40,26 @@ public class Main
         panel.sleep(TIME_STEP);  // delay for time step
 
         //create a JOption prompt to start the simulation
-        JOptionPane.showMessageDialog(frame, "Hello, Please click to begin.");
+        JOptionPane.showMessageDialog(frame, "Hello, Please click to begin simulation. Please turn your sound on.");
 
 
         //while the user has not left clicked on the simulation
         while (!panel.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON)) {
-            if(panel.keyHasBeenHit("SPACE")){
+            if (panel.keyHasBeenHit(DrawingPanel.SPACE_KEY)) {
+                g.drawString("Game has been paused", SIZE / 2, SIZE / 2);
+                while (true) {
+                    panel.waitForKey();
+                    int keyCode = panel.getKeyHitCode();
+                    if (keyCode == DrawingPanel.SPACE_KEY) {
+                        break;
+                    }
+                }
 
             }
-            //TODO implement space bar pause
 
             //define what the window title is and update it with live losses
             panel.setWindowTitle("CS330 Mini Massive: " +
-                    (allies.numAlive() + axis.numAlive())  + " soldiers alive");
+                    (allies.numAlive() + axis.numAlive()) + " soldiers alive");
 
             panel.setBackground(Color.lightGray);
             //move, attack, and draw the battle
@@ -67,15 +74,17 @@ public class Main
             panel.sleep(TIME_STEP);  // delay for time step
 
             //check to see if the axis have won
-            if(axis.numAlive() == 0){
-                panel.setWindowTitle("CS330 Mini Massive: Allies has won");
+            if (axis.numAlive() == 0) {
+                panel.setWindowTitle("CS330 Mini Massive: Allies have won");
+                JOptionPane.showMessageDialog(frame, "Allies have won");
                 panel.sleep(10000);  // delay for time step
                 break;
             }
 
             //check to see if the allies have won
-            if(allies.numAlive() == 0){
-                panel.setWindowTitle("CS330 Mini Massive: Axis has won");
+            if (allies.numAlive() == 0) {
+                panel.setWindowTitle("CS330 Mini Massive: Axis have won");
+                JOptionPane.showMessageDialog(frame, "Axis have won");
                 panel.sleep(10000);  // delay for time step
                 break;
             }
@@ -84,9 +93,7 @@ public class Main
 
         panel.closeWindow();  // all done
 
-
     }
-
 
 }
 

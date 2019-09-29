@@ -51,7 +51,6 @@ class OptionPanes {
 
 
         if (reply == JOptionPane.YES_OPTION) { //have the user generate their own
-            //TODO elaborate on error checking
             setValues(Warrior.archerStats, "Archer");
             setValues(Warrior.knightStats, "Knight");
             setValues(Warrior.dragonStats, "Dragon");
@@ -117,74 +116,35 @@ class OptionPanes {
      * @return a army containing the selected number of soldiers
      */
     static Army armySize(int allianceNumber) {
-        //initalize JFrame values for each variable
-        JFrame frame;
-        frame = new JFrame();
-        JPanel pane;
-        JTextField numArchers;
-        JTextField numKnights;
-        JTextField numDragons;
-        JTextField numOrcs;
-        JTextField numOgres;
+        int absValue = 50;
+        int numArchers = numClass("archers", allianceNumber, absValue);
+        int numKnights = numClass("knights", allianceNumber, absValue);
+        int numDragons = numClass("dragons", allianceNumber, absValue);
+        int numOrcs = numClass("orcs", allianceNumber, absValue);
+        int numOgres = numClass("ogres", allianceNumber, absValue);
 
+
+        return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres);
+    }
+
+    public static int numClass(String name, int allianceNumber, int absValue){
+        JPanel pane;
         pane = new JPanel();
         pane.setLayout(new GridLayout(0, 2, 2, 2));
+        JOptionPane optionPane = new JOptionPane();
 
-        numArchers = new JTextField(5);
-        numKnights = new JTextField(5);
-        numDragons = new JTextField(5);
-        numOrcs = new JTextField(5);
-        numOgres = new JTextField(5);
-
-        pane.add(new JLabel("Please enter the number of archers in this army."));
-        pane.add(numArchers);
-
-        pane.add(new JLabel("Please enter the number of knights in this army."));
-        pane.add(numKnights);
-
-        pane.add(new JLabel("Please enter the number of dragons in this army."));
-        pane.add(numDragons);
-
-        pane.add(new JLabel("Please enter the number of orcs in this army."));
-        pane.add(numOrcs);
-
-        pane.add(new JLabel("Please enter the number of ogres in this army."));
-        pane.add(numOgres);
-
-        int option = JOptionPane.showConfirmDialog(frame, pane, "Please fill all the fields for army #" + allianceNumber, JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-
-        //convert the input from a string into a int
-        String numArchersInput = numArchers.getText();
-        int fNumArchers = Integer.parseInt(numArchersInput);
-        //check to ensure the user hasn't done a negative and if so set that # of unit to 0
-        if (fNumArchers < 0) {
-            fNumArchers = 0;
+        JSlider slider = sliding(optionPane, absValue);
+        optionPane.setMessage(new Object[] {"Please enter a number of " + name +  " for army " + allianceNumber, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            return 0;
         }
-
-        String numKnightsInput = numKnights.getText();
-        int fNumKnights = Integer.parseInt(numKnightsInput);
-        if (fNumKnights < 0) {
-            fNumKnights = 0;
+        else{
+            return (int) optionPane.getInputValue();
         }
-
-        String numDragonsInput = numDragons.getText();
-        int fNumDragons = Integer.parseInt(numDragonsInput);
-        if (fNumDragons < 0) {
-            fNumDragons = 0;
-        }
-
-        String numOrcsInput = numOrcs.getText();
-        int fNumOrcs = Integer.parseInt(numOrcsInput);
-        if (fNumOrcs < 0) {
-            fNumOrcs = 0;
-        }
-
-        String numOgresInput = numOgres.getText();
-        int fNumOgres = Integer.parseInt(numOgresInput);
-        if (fNumOgres < 0) {
-            fNumOgres = 0;
-        }
-        return new Army(allianceNumber, fNumArchers, fNumKnights, fNumDragons, fNumOrcs, fNumOgres);
     }
 
     /**

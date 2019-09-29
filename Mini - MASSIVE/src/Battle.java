@@ -1,14 +1,21 @@
+import javax.sound.sampled.*;
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Random;
+import java.io.*;
 
 /**
  * Project: Mini - MASSIVE
  * : Controls execution of the battle
+ *
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330
  */
 class Battle {
+    static String fileName = "Mini - MASSIVE/src/Minecraft-death-sound.wav";
 
     Battle(Graphics2D g, Army allies, Army axis) {
         attackWarriors(axis, allies);
@@ -155,63 +162,78 @@ class Battle {
     }
 
     /**
+     * runs through an army array and calculates damage given if possible for each attacker v one enemy
+     *
+     * @param Attackers the army doing the attacking at that point
+     * @param Defenders the army doing the defending at that point
+     */
+    private static void warriorDamage(Army Attackers, Army Defenders) {
+        Random rand = new Random();
+        for (int i = 0; i < Attackers.soldiers.size(); i++) {
+            //get the index of the closest enemy
+            if (Attackers.soldiers.get(i).isAlive()) {
+                int index = detectEnemy(Attackers.soldiers.get(i), Defenders);
+                try {
+                    if (index == -1) {
+                        throw new Exception("That does not exist.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("An index of the nearest soldier was not found");
+                    break;
+                }
+                //if the closest enemy is in range of the friendly soldier, attack with your attack stat
+                if (magnitude(Attackers.soldiers.get(i), Defenders, index) <= Attackers.soldiers.get(i).getRange() + Attackers.soldiers.get(i).getSize() && Defenders.soldiers.get(index).isAlive()) {
+                    //determine if attacker has missed the defender
+                    if (!(rand.nextInt(100) <= 100 * Attackers.soldiers.get(i).getAttack() / (Attackers.soldiers.get(i).getAttack() + Defenders.soldiers.get(index).getAttack()))) {
+                        //stop them from moving so that they can shoot or attack
+                        Attackers.soldiers.get(i).setMoving(false);
+                        Defenders.soldiers.get(index).setHealth(Defenders.soldiers.get(index).getHealth() - Attackers.soldiers.get(i).getAttack());
+
+                        //show how much damage was done
+                        System.out.println(Attackers.soldiers.get(i).getName() + " just dealt " + (Attackers.soldiers.get(i).getAttack()) +
+                                " damage to " + Defenders.soldiers.get(index).getName());
+
+                        if (Defenders.soldiers.get(index).getHealth() <= 0) {
+                            //creates a noise when a warrior dies
+                            try{
+                                File soundFile = new File(fileName);
+                                AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+                                Clip clip = AudioSystem.getClip();
+                                clip.open(audioStream);
+                                clip.start();
+                            } catch (UnsupportedAudioFileException e) {
+                                System.out.println("Audio file not supported, make sure its a wav");
+                            } catch (IOException e) {
+                                System.out.println("IO exception");
+                            } catch (LineUnavailableException e) {
+                                e.printStackTrace();
+                            } finally {
+                                Defenders.soldiers.get(index).setAlive(false);
+                                System.out.println(Attackers.soldiers.get(i).getName() + " " + i + " just killed " + Defenders.soldiers.get(index).getName() + " " + index);
+                            }
+
+                        }
+                    } else {
+                        //print out a missed message
+                        System.out.println(Attackers.soldiers.get(i).getName() + " has just missed " + Defenders.soldiers.get(index).getName());
+                    }
+                } else {
+                    Attackers.soldiers.get(i).setMoving(true);
+                }
+            }
+        }
+    }
+
+
+    /**
      * attackWarriors() determines which warriors can and do deal damage to the closest enemy unit in range
      *
      * @param axis   a army containing warriors
      * @param allies a army containing warriors
      */
     private static void attackWarriors(Army axis, Army allies) {
-        for (int i = 0; i < allies.soldiers.size(); i++) {
-            //get the index of the closest enemy
-            if (allies.soldiers.get(i).isAlive()) {
-                int index = detectEnemy(allies.soldiers.get(i), axis);
-                try {
-                    if (index == -1) {
-                        throw new Exception("That does not exist.");
-                    }
-                } catch (Exception e) {
-                    System.out.println("An index of the nearest soldier was not found");
-                    break;
-                }
-                //if the closest enemy is in range of the friendly soldier, attack with your attack stat
-                if (magnitude(allies.soldiers.get(i), axis, index) <= allies.soldiers.get(i).getRange() && axis.soldiers.get(index).isAlive()) {
-                    //set the enemy soldiers health to the attack - your prevous health
-                    allies.soldiers.get(i).setMoving(false);
-                    axis.soldiers.get(index).setHealth(axis.soldiers.get(index).getHealth() - allies.soldiers.get(i).getAttack());
-                    if (axis.soldiers.get(index).getHealth() <= 0) {
-                        axis.soldiers.get(index).setAlive(false);
-                    }
-                } else {
-                    allies.soldiers.get(i).setMoving(true);
-                }
-            }
-        }
-
-        for (int i = 0; i < axis.soldiers.size(); i++) {
-            //get the index of the closest enemy
-            if (axis.soldiers.get(i).isAlive()) {
-                int index = detectEnemy(axis.soldiers.get(i), allies);
-                try {
-                    if (index == -1) {
-                        throw new Exception("That does not exist.");
-                    }
-                } catch (Exception e) {
-                    System.out.println("An index of the nearest soldier was not found");
-                    break;
-                }
-                //if the closest enemy is in range of the friendly soldier, attack with your attack stat
-                if (magnitude(axis.soldiers.get(i), allies, index) <= axis.soldiers.get(i).getRange() && allies.soldiers.get(index).isAlive()) {
-                    //set the enemy soldiers health to the attack - your prevous health
-                    axis.soldiers.get(i).setMoving(false);
-                    allies.soldiers.get(index).setHealth(allies.soldiers.get(index).getHealth() - axis.soldiers.get(i).getAttack());
-                    if (allies.soldiers.get(index).getHealth() <= 0) {
-                        allies.soldiers.get(index).setAlive(false);
-                    }
-                } else {
-                    axis.soldiers.get(i).setMoving(true);
-                }
-            }
-        }
+        warriorDamage(allies, axis);
+        warriorDamage(axis, allies);
     }
 
     /**
