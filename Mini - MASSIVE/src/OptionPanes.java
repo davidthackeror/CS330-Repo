@@ -57,6 +57,7 @@ class OptionPanes {
             setValues(Warrior.orcStats, "Orc");
             setValues(Warrior.ogreStats, "Ogre");
         } else { //set defaults for each class to 'balanced' values
+            //each warrior has an array set up that gives the max and min values stored in the format shown below
             Warrior.archerStats[0] = 50;//health
             Warrior.archerStats[1] = 10;//minAttack
             Warrior.archerStats[2] = 20;//maxAttack
@@ -127,7 +128,16 @@ class OptionPanes {
         return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres);
     }
 
-    public static int numClass(String name, int allianceNumber, int absValue){
+    /**
+     * creates a JSlider input for a number of units to be put in an army, an uninitialized value puts 0 of that unit
+     * in the game
+     * @param name the name of the unit
+     * @param allianceNumber the number of the army that that unit would be placed in to
+     * @param absValue the absolute number of that unit allowed
+     * @return the selected number of that unit
+     */
+    private static int numClass(String name, int allianceNumber, int absValue){
+        //create new pane
         JPanel pane;
         pane = new JPanel();
         pane.setLayout(new GridLayout(0, 2, 2, 2));
@@ -136,13 +146,16 @@ class OptionPanes {
         JSlider slider = sliding(optionPane, absValue);
         optionPane.setMessage(new Object[] {"Please enter a number of " + name +  " for army " + allianceNumber, slider});
         optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
+        optionPane.setOptionType(JOptionPane.YES_NO_OPTION);
         JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
+        //this is depreciated but its staying cause it doesnt break anything and I'm scared that if i remove it it will break
         dialog.show();
         if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            //if the user hits no or does not select a value then there is a 0 for that unit
             return 0;
         }
         else{
+            //return the selected number of that unit
             return (int) optionPane.getInputValue();
         }
     }
@@ -153,23 +166,51 @@ class OptionPanes {
      * @param maxNum the maximum number allowed on the slider
      * @return the slider reference
      */
-    public static JSlider sliding(final JOptionPane optionPane, int maxNum){
+    private static JSlider sliding(final JOptionPane optionPane, int maxNum){
         JSlider slider = new JSlider(0, maxNum);
         slider.setMajorTickSpacing(maxNum/10);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
 
-        ChangeListener changeListener = new ChangeListener() {
-            public void stateChanged(ChangeEvent changeEvent){
-                JSlider theSlider = (JSlider)changeEvent.getSource();
-                if(!theSlider.getValueIsAdjusting()){
-                    optionPane.setInputValue((int)(theSlider.getValue()));
-                }
+        //adapt the input based on changes from the user
+        ChangeListener changeListener = changeEvent -> {
+            JSlider theSlider = (JSlider)changeEvent.getSource();
+            if(!theSlider.getValueIsAdjusting()){
+                optionPane.setInputValue((int)(theSlider.getValue()));
             }
-
         };
         slider.addChangeListener(changeListener);
         return slider;
+    }
+
+    /**
+     * fetch user input from a JSlider and feed it back as a value for an attribute of all warriors of that type
+     * @param name the name of the attribute to change
+     * @param absValue the max that attribute can be for any unit
+     * @return the selected number for that specific attribute from the user
+     */
+    private static int numAttribute(String name, int absValue, String unit){
+        //create new pane
+        JPanel pane;
+        pane = new JPanel();
+        pane.setLayout(new GridLayout(0, 2, 2, 2));
+        JOptionPane optionPane = new JOptionPane();
+
+        JSlider slider = sliding(optionPane, absValue);
+        optionPane.setMessage(new Object[] {"Please enter a the desired value of " + name + " for " + unit, slider});
+        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+        optionPane.setOptionType(JOptionPane.YES_NO_OPTION);
+        JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
+        //this is depreciated but its staying cause it doesnt break anything and I'm scared that if i remove it it will break
+        dialog.show();
+        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
+            //if the user hits no or does not select a value then there is a 0 for that unit
+            return absValue/2;
+        }
+        else{
+            //return the selected number of that unit
+            return (int) optionPane.getInputValue();
+        }
     }
 
     /**
@@ -178,139 +219,44 @@ class OptionPanes {
      * @param stats the attribute array to be written to
      * @param name  the name of the warrior class to be written to
      */
-    public static void setValues(int[] stats, String name){
-        JPanel pane;
-        pane = new JPanel();
-        pane.setLayout(new GridLayout(0, 2, 2, 2));
-        JOptionPane optionPane = new JOptionPane();
-        JSlider slider = sliding(optionPane, absHealth);
-        optionPane.setMessage(new Object[] {"Please enter a health value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        JDialog dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[0] = absHealth/2;
-        }
-        else{
-            stats [0] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absAttack);
-        optionPane.setMessage(new Object[] {"Please enter a min attack value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[1] = absAttack/2;
-        }
-        else{
-            stats [1] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absAttack);
-        optionPane.setMessage(new Object[] {"Please enter a max attack value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[2] = absAttack/2;
-        }
-        else{
-            stats [2] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absSpeed);
-        optionPane.setMessage(new Object[] {"Please enter a min speed value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[3] = absSpeed/2;
-        }
-        else{
-            stats [3] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absSpeed);
-        optionPane.setMessage(new Object[] {"Please enter a max speed value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[4] = absSpeed/2;
-        }
-        else{
-            stats [4] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absCourage);
-        optionPane.setMessage(new Object[] {"Please enter a min courage value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[5] = absSpeed/2;
-        }
-        else{
-            stats [5] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absSpeed);
-        optionPane.setMessage(new Object[] {"Please enter a max speed value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[6] = absSpeed/2;
-        }
-        else{
-            stats [6] = (int) optionPane.getInputValue();
-        }
-        slider = sliding(optionPane, absSize);
-        optionPane.setMessage(new Object[] {"Please enter a size value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[7] = absSize/2;
-        }
-        else{
-            stats [7] = (int) optionPane.getInputValue();
+    private static void setValues(int[] stats, String name){
+        //this could definitely be smaller but im not sure how I would do it.
+        int health = numAttribute("health", absHealth, name);
+        int minAttack = numAttribute("min Attack", absAttack, name);
+        int maxAttack = numAttribute("max Attack", absAttack, name);
+        int minSpeed = numAttribute("min Speed", absSpeed, name);
+        int maxSpeed = numAttribute("max Speed", absSpeed, name);
+        int minCourage = numAttribute("min Courage", absCourage, name);
+        int maxCourage = numAttribute("max Courage", absCourage, name);
+        int range = numAttribute("range", absRange, name);
+        int size = numAttribute("size", absSize, name);
 
+        if(isMinLargerMax(minAttack, maxAttack)){
+            int temp = minAttack;
+            minAttack = maxAttack;
+            maxAttack = temp + 2;
         }
-        slider = sliding(optionPane, absRange);
-        optionPane.setMessage(new Object[] {"Please enter a range value for a " + name, slider});
-        optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-        optionPane.setOptionType(JOptionPane.OK_OPTION);
-        dialog = optionPane.createDialog(pane, "Stat Slider");
-        dialog.show();
-        if(optionPane.getInputValue().equals(JOptionPane.UNINITIALIZED_VALUE)){
-            stats[8] = absRange/2;
+        if(isMinLargerMax(minSpeed, maxSpeed)){
+            int temp = minSpeed;
+            minSpeed = maxSpeed;
+            maxSpeed = temp + 2;
         }
-        else{
-            stats [8] = (int) optionPane.getInputValue();
+        if(isMinLargerMax(minCourage, maxCourage)){
+            int temp = minCourage;
+            minCourage = maxCourage;
+            maxCourage = temp + 2;
         }
-
-        if(isMinLargerMax(stats[1], stats[2])){
-            int temp = stats[1];
-            stats[1] = stats[2];
-            stats[2] = temp + 2;
-        }
-        if(isMinLargerMax(stats[3], stats[4])){
-            int temp = stats[3];
-            stats[3] = stats[4];
-            stats[4] = temp + 1;
-        }
-        if(isMinLargerMax(stats[5], stats[6])){
-            int temp = stats[5];
-            stats[5] = stats[6];
-            stats[6] = temp + 1;
-        }
+        stats[0] = health;
+        stats[1] = minAttack;
+        stats[2] = maxAttack;
+        stats[3] = minSpeed;
+        stats[4] = maxSpeed;
+        stats[5] = minCourage;
+        stats[6] = maxCourage;
+        stats[7] = range;
+        stats[8] = size;
 
     }
-
 
     /**
      * isMinLargerMax() determines if a user has mistakenly inserted a value larger than the desired max value

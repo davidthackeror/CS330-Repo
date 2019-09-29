@@ -47,6 +47,7 @@ public class Main {
         while (!panel.mouseClickHasOccurred(DrawingPanel.LEFT_BUTTON)) {
             if (panel.keyHasBeenHit(DrawingPanel.SPACE_KEY)) {
                 g.drawString("Game has been paused", SIZE / 2, SIZE / 2);
+                panel.copyGraphicsToScreen();  // update display
                 while (true) {
                     panel.waitForKey();
                     int keyCode = panel.getKeyHitCode();
@@ -77,7 +78,6 @@ public class Main {
             if (axis.numAlive() == 0) {
                 panel.setWindowTitle("CS330 Mini Massive: Allies have won");
                 JOptionPane.showMessageDialog(frame, "Allies have won");
-                panel.sleep(10000);  // delay for time step
                 break;
             }
 
@@ -85,7 +85,6 @@ public class Main {
             if (allies.numAlive() == 0) {
                 panel.setWindowTitle("CS330 Mini Massive: Axis have won");
                 JOptionPane.showMessageDialog(frame, "Axis have won");
-                panel.sleep(10000);  // delay for time step
                 break;
             }
 

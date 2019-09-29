@@ -15,6 +15,9 @@ import java.io.*;
  * Class: CS330
  */
 class Battle {
+    /**
+     * the relative path to the death sound
+     */
     static String fileName = "Mini - MASSIVE/src/Minecraft-death-sound.wav";
 
     Battle(Graphics2D g, Army allies, Army axis) {
@@ -223,7 +226,6 @@ class Battle {
             }
         }
     }
-
 
     /**
      * attackWarriors() determines which warriors can and do deal damage to the closest enemy unit in range
