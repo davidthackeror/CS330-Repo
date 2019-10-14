@@ -12,12 +12,11 @@ import java.util.Random;
 public class Army{
 
     private int allianceNum;
+    private String armyName;
     ArrayList<Warrior> soldiers = new ArrayList<Warrior>();
-    Army(){
 
-    }
 
-    Army(int allianceNum, int numArchers, int numKnights, int numDragons, int numOrcs, int numOgres) {
+    Army(int allianceNum, int numArchers, int numKnights, int numDragons, int numOrcs, int numOgres, String armyName) {
         this.allianceNum = allianceNum;
         for (int i = 0; i < numArchers; i++) {
             soldiers.add(new Archer());
@@ -45,7 +44,7 @@ public class Army{
             soldiers.get(soldiers.size() - 1).setyPos(generateY(allianceNum));
         }
         setAllianceColor(allianceNum, soldiers);
-
+        this.armyName = armyName;
     }
 
     /**
@@ -170,5 +169,13 @@ public class Army{
             }
         }
         return numAlive;
+    }
+
+    public String getArmyName() {
+        return armyName;
+    }
+
+    public void setArmyName(String armyName) {
+        this.armyName = armyName;
     }
 }

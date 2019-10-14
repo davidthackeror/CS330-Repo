@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
@@ -118,14 +117,19 @@ class OptionPanes {
      */
     static Army armySize(int allianceNumber) {
         int absValue = 50;
-        int numArchers = numClass("archers", allianceNumber, absValue);
-        int numKnights = numClass("knights", allianceNumber, absValue);
-        int numDragons = numClass("dragons", allianceNumber, absValue);
-        int numOrcs = numClass("orcs", allianceNumber, absValue);
-        int numOgres = numClass("ogres", allianceNumber, absValue);
+//        int numArchers = numClass("archers", allianceNumber, absValue);
+//        int numKnights = numClass("knights", allianceNumber, absValue);
+//        int numDragons = numClass("dragons", allianceNumber, absValue);
+//        int numOrcs = numClass("orcs", allianceNumber, absValue);
+//        int numOgres = numClass("ogres", allianceNumber, absValue);
 
+        int numArchers = 1;
+        int numKnights = 1;
+        int numDragons = 1;
+        int numOrcs = 1;
+        int numOgres = 1;
 
-        return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres);
+        return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres, "Yes");
     }
 
     /**

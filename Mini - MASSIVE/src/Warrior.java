@@ -81,6 +81,8 @@ public abstract class Warrior {
      */
     private Color color;
 
+    private int[] minArray = new int[3];
+
     Warrior() {
         this.xPos = 0;
         this.yPos = 0;
@@ -312,5 +314,17 @@ public abstract class Warrior {
      */
     void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    void print() {
+        System.out.println("Name is" + this.getName());
+    }
+
+    public int[] getMinArray() {
+        return minArray;
+    }
+
+    public void setMinArray(int[] minArray) {
+        this.minArray = minArray;
     }
 }

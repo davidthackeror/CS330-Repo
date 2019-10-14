@@ -1,10 +1,9 @@
 import javax.sound.sampled.*;
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
-import java.io.*;
 
 /**
  * Project: Mini - MASSIVE
@@ -18,25 +17,24 @@ class Battle {
     /**
      * the relative path to the death sound
      */
-    static String fileName = "Mini - MASSIVE/src/Minecraft-death-sound.wav";
+    static String fileName = "Minecraft-death-sound.wav";
 
-    Battle(Graphics2D g, Army allies, Army axis) {
-        attackWarriors(axis, allies);
-        moveWarriors(axis, allies);
-        Battle.drawWarriors(g, axis, allies);
-
+    Battle(Graphics2D g, ArrayList<Army> armies) {
+        warriorDamage(armies);
+        moveWarriors(armies);
+        Battle.drawWarriors(g, armies);
     }
 
     /**
      * detectEnemy() uses the Vector330Class to determine the enemy closest to a selected warrior
+     * and store the closest warrior, its magnitude, and army in the array
      *
      * @param attacker  the specific warrior to detect the closest enemy for
      * @param defenders the entire enemy army
-     * @return the index of the closest enemy to that soldier
      */
-    private static int detectEnemy(Warrior attacker, Army defenders) {
+    private static void detectEnemy(Warrior attacker, Army defenders, int[] minArray) {
         int index = -1;
-        double minimumDistance = 1000;
+        int minimumDistance = 1000;
         Vector330Class calcVector = new Vector330Class();
         //for every defender in the army check to see their distance
         for (int j = 0; j < defenders.soldiers.size(); j++) {
@@ -46,13 +44,13 @@ class Battle {
                 calcVector.setX(defenders.soldiers.get(j).getxPos() - attacker.getxPos());
                 calcVector.setY(defenders.soldiers.get(j).getyPos() - attacker.getyPos());
                 //check to see if that magnitude is the smallest yet
-                if (calcVector.magnitude() < minimumDistance) {
-                    minimumDistance = calcVector.magnitude();
-                    index = j;
+                if (calcVector.magnitude() < minArray[1]) {
+                    minArray[2] = defenders.getAllianceNum();
+                    minArray[1] = (int) calcVector.magnitude();
+                    minArray[0] = j;
                 }
             }
         }
-        return index;
     }
 
     /**
@@ -68,73 +66,41 @@ class Battle {
     /**
      * moveWarriors() will move all warriors of the respective armies closer to closest enemy detected
      *
-     * @param axis   a army containing warriors
-     * @param allies a army containing warriors
+     * @param armies an array list containing all armies in play
      */
-    private static void moveWarriors(Army axis, Army allies) {
+    private static void moveWarriors(ArrayList<Army> armies) {
         Random rand = new Random();
-
-
-        for (int i = 0; i < allies.soldiers.size(); i++) {
-            //if the selected soldier is alive and can move
-            if (allies.soldiers.get(i).isAlive() && allies.soldiers.get(i).isMoving()) {
-                //are they out of bounds now? if so kill them.
-                if (outOfBounds(allies.soldiers.get(i))) {
-                    allies.soldiers.get(i).setAlive(false);
-                } else {
-                    //get the closest enemy
-                    int index = detectEnemy(allies.soldiers.get(i), axis);
-
-                    //if detectEnemy comes back with a -1 then there are no more alive enemies
-                    try {
-                        if (index == -1) {
-                            throw new Exception("That does not exist.");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("An index of the nearest soldier was not found");
-                        break;
-                    }
-
-                    //calculate the cowardice which is 1 - a soldiers courage. if a random roll between 1-100 generates a number <= then they run away for a tick
-                    int cowardice = 100 * (1 - allies.soldiers.get(i).getCourage());
-                    if (rand.nextInt(100) <= cowardice) {
-                        //invert the vector to run on
-                        allies.soldiers.get(i).move(-(axis.soldiers.get(index).getxPos()), (-(axis.soldiers.get(index).getyPos())));
-
+        for (Object army : armies) {
+            Army Attackers = (Army) army;
+            for (int i = 0; i < Attackers.soldiers.size(); i++) {
+                if (Attackers.soldiers.get(i).isAlive() && Attackers.soldiers.get(i).isMoving()) {
+                    if (outOfBounds(Attackers.soldiers.get(i))) {
+                        Attackers.soldiers.get(i).setAlive(false);
                     } else {
-                        //move the soldier towards their target
-                        allies.soldiers.get(i).move(axis.soldiers.get(index).getxPos(), axis.soldiers.get(index).getyPos());
-
-                    }
-                }
-            }
-        }
-
-
-        for (int i = 0; i < axis.soldiers.size(); i++) {
-            if (axis.soldiers.get(i).isAlive() && axis.soldiers.get(i).isMoving()) {
-                if (outOfBounds(axis.soldiers.get(i))) {
-                    axis.soldiers.get(i).setAlive(false);
-                } else {
-                    int index = detectEnemy(axis.soldiers.get(i), allies);
-                    //if detectEnemy comes back with a -1 then there are no more alive enemies
-                    try {
-                        if (index == -1) {
-                            throw new Exception("That does not exist.");
+                        //get the closest enemy
+                        int[] soldierArray = Attackers.soldiers.get(i).getMinArray();
+                        int index = soldierArray[0];
+                        //if detectEnemy comes back with a -1 then there are no more alive enemies
+                        try {
+                            if (soldierArray[0] == -1) {
+                                throw new Exception("That does not exist.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("An index of the nearest soldier was not found");
+                            break;
                         }
-                    } catch (Exception e) {
-                        System.out.println("An index of the nearest soldier was not found");
-                        break;
-                    }
+                        Army axis = armies.get(soldierArray[2]);
+                        //calculate the cowardice which is 1 - a soldiers courage. if a random roll between 1-100 generates a number <= then they run away for a tick
+                        int cowardice = 100 * (1 - Attackers.soldiers.get(i).getCourage());
+                        if (rand.nextInt(100) <= cowardice) {
+                            //invert the vector to run on
+                            Attackers.soldiers.get(i).move(-(axis.soldiers.get(index).getxPos()), (-(axis.soldiers.get(index).getyPos())));
 
-                    //calculate the cowardice which is 1 - a soldiers courage. if a random roll between 1-100 generates a number <= then they run away for a tick
-                    int cowardice = (100 - axis.soldiers.get(i).getCourage());
-                    if (rand.nextInt(100) <= cowardice) {
-                        //invert the vector to run on
-                        axis.soldiers.get(i).move(-(allies.soldiers.get(index).getxPos()), (-(allies.soldiers.get(index).getyPos())));
-                    } else {
-                        //move the soldier towards their target
-                        axis.soldiers.get(i).move(allies.soldiers.get(index).getxPos(), allies.soldiers.get(index).getyPos());
+                        } else {
+                            //move the soldier towards their target
+                            Attackers.soldiers.get(i).move(axis.soldiers.get(index).getxPos(), axis.soldiers.get(index).getyPos());
+
+                        }
                     }
                 }
             }
@@ -145,97 +111,91 @@ class Battle {
      * drawWarriors() puts the alive warriors of each army on screen in accordance with their x and y positions
      *
      * @param g      the graphics window to draw to
-     * @param axis   a army containing warriors
-     * @param allies a army containing warriors
+     * @param armies a array list containing all the armies in play
      */
-    private static void drawWarriors(Graphics2D g, Army axis, Army allies) {
+    private static void drawWarriors(Graphics2D g, ArrayList<Army> armies) {
 
-        for (int i = 0; i < allies.soldiers.size(); i++) {
-            if (allies.soldiers.get(i).isAlive()) {
-                allies.soldiers.get(i).draw(g);
-            }
-        }
-
-
-        for (int i = 0; i < axis.soldiers.size(); i++) {
-            if (axis.soldiers.get(i).isAlive()) {
-                axis.soldiers.get(i).draw(g);
+        for (Army army : armies) {
+            for (int i = 0; i < army.soldiers.size(); i++) {
+                if (army.soldiers.get(i).isAlive()) {
+                    army.soldiers.get(i).draw(g);
+                }
             }
         }
     }
 
     /**
-     * runs through an army array and calculates damage given if possible for each attacker v one enemy
+     * warriorDamage() goes through all armies in play and deals damage to those alive
      *
-     * @param Attackers the army doing the attacking at that point
-     * @param Defenders the army doing the defending at that point
+     * @param armies a array list containing all the armies in play
      */
-    private static void warriorDamage(Army Attackers, Army Defenders) {
+    private static void warriorDamage(ArrayList<Army> armies) {
         Random rand = new Random();
-        for (int i = 0; i < Attackers.soldiers.size(); i++) {
-            //get the index of the closest enemy
-            if (Attackers.soldiers.get(i).isAlive()) {
-                int index = detectEnemy(Attackers.soldiers.get(i), Defenders);
+        for (Object army : armies) {
+            Army Attackers = (Army) army;
+            for (int i = 0; i < Attackers.soldiers.size(); i++) {
+                int[] intArray = new int[3];
+                intArray[0] = -1; //index of lowest
+                intArray[1] = 1000; //magnitude of lowest
+                intArray[2] = -1; //army of lowest
+                for (Object o : armies) {
+                    Army enemyArmy = (Army) o;
+                    if (enemyArmy.getAllianceNum() != Attackers.getAllianceNum()) {
+                        detectEnemy(Attackers.soldiers.get(i), enemyArmy, intArray);
+                    }
+                }
                 try {
-                    if (index == -1) {
+                    if (intArray[0] == -1) {
                         throw new Exception("That does not exist.");
                     }
                 } catch (Exception e) {
                     System.out.println("An index of the nearest soldier was not found");
                     break;
                 }
-                //if the closest enemy is in range of the friendly soldier, attack with your attack stat
-                if (magnitude(Attackers.soldiers.get(i), Defenders, index) <= Attackers.soldiers.get(i).getRange() + Attackers.soldiers.get(i).getSize() && Defenders.soldiers.get(index).isAlive()) {
+                Army Defenders = (Army) armies.get(intArray[2]);
+                if (magnitude(Attackers.soldiers.get(i), Defenders, intArray[0]) <= Attackers.soldiers.get(i).getRange() + Attackers.soldiers.get(i).getSize() && Defenders.soldiers.get(intArray[0]).isAlive()) {
                     //determine if attacker has missed the defender
-                    if (!(rand.nextInt(100) <= 100 * Attackers.soldiers.get(i).getAttack() / (Attackers.soldiers.get(i).getAttack() + Defenders.soldiers.get(index).getAttack()))) {
+                    if (!(rand.nextInt(100) <= 100 * Attackers.soldiers.get(i).getAttack() / (Attackers.soldiers.get(i).getAttack() + Defenders.soldiers.get(intArray[0]).getAttack()))) {
                         //stop them from moving so that they can shoot or attack
                         Attackers.soldiers.get(i).setMoving(false);
-                        Defenders.soldiers.get(index).setHealth(Defenders.soldiers.get(index).getHealth() - Attackers.soldiers.get(i).getAttack());
+                        Defenders.soldiers.get(intArray[0]).setHealth(Defenders.soldiers.get(intArray[0]).getHealth() - Attackers.soldiers.get(i).getAttack());
 
                         //show how much damage was done
                         System.out.println(Attackers.soldiers.get(i).getName() + " just dealt " + (Attackers.soldiers.get(i).getAttack()) +
-                                " damage to " + Defenders.soldiers.get(index).getName());
+                                " damage to " + Defenders.soldiers.get(intArray[0]).getName() + " in army " + intArray[2]);
 
-                        if (Defenders.soldiers.get(index).getHealth() <= 0) {
-                            //creates a noise when a warrior dies
-                            try{
-                                File soundFile = new File(fileName);
-                                AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-                                Clip clip = AudioSystem.getClip();
-                                clip.open(audioStream);
-                                clip.start();
-                            } catch (UnsupportedAudioFileException e) {
-                                System.out.println("Audio file not supported, make sure its a wav");
-                            } catch (IOException e) {
-                                System.out.println("IO exception");
-                            } catch (LineUnavailableException e) {
-                                e.printStackTrace();
-                            } finally {
-                                Defenders.soldiers.get(index).setAlive(false);
-                                System.out.println(Attackers.soldiers.get(i).getName() + " " + i + " just killed " + Defenders.soldiers.get(index).getName() + " " + index);
-                            }
-
+                        if (Defenders.soldiers.get(intArray[0]).getHealth() <= 0) {
+                            playSound();
+                            Defenders.soldiers.get(intArray[0]).setAlive(false);
+                            System.out.println(Attackers.soldiers.get(i).getName() + " " + i + " just killed " + Defenders.soldiers.get(intArray[0]).getName() + " " + intArray[0] + " in army " + intArray[2]);
                         }
                     } else {
                         //print out a missed message
-                        System.out.println(Attackers.soldiers.get(i).getName() + " has just missed " + Defenders.soldiers.get(index).getName());
+                        System.out.println(Attackers.soldiers.get(i).getName() + " has just missed " + Defenders.soldiers.get(intArray[0]).getName());
                     }
                 } else {
                     Attackers.soldiers.get(i).setMoving(true);
                 }
+                Attackers.soldiers.get(i).setMinArray(intArray);
             }
         }
     }
 
-    /**
-     * attackWarriors() determines which warriors can and do deal damage to the closest enemy unit in range
-     *
-     * @param axis   a army containing warriors
-     * @param allies a army containing warriors
-     */
-    private static void attackWarriors(Army axis, Army allies) {
-        warriorDamage(allies, axis);
-        warriorDamage(axis, allies);
+    private static void playSound() {
+        //creates a noise when a warrior dies
+        try {
+            File soundFile = new File(fileName);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Audio file not supported, make sure its a wav");
+        } catch (IOException e) {
+            System.out.println("IO exception");
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

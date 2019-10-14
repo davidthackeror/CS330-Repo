@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Project: Mini - MASSIVE
@@ -22,6 +23,9 @@ public class Main {
         //generate two armies from user input
         Army allies = OptionPanes.armySize(0);
         Army axis = OptionPanes.armySize(1);
+        ArrayList<Army> armies = new ArrayList<>();
+        armies.add(allies);
+        armies.add(axis);
 
         //create a new frame to prompt the user later on to stat the sim
         JFrame frame = new JFrame();
@@ -35,7 +39,7 @@ public class Main {
 
         panel.setBackground(Color.WHITE);  // clear old display
         //begin the first moves, attacks, and drawings of the game
-        new Battle(g, allies, axis);
+        new Battle(g, armies);
         panel.copyGraphicsToScreen();  // update display
         panel.sleep(TIME_STEP);  // delay for time step
 
@@ -64,7 +68,7 @@ public class Main {
 
             panel.setBackground(Color.lightGray);
             //move, attack, and draw the battle
-            new Battle(g, allies, axis);
+            new Battle(g, armies);
 
             //create the live army status counters
             g.setColor(Color.black);
