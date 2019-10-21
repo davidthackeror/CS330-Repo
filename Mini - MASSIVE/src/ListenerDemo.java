@@ -57,8 +57,8 @@ public class ListenerDemo extends JFrame {
     public ListenerDemo() {
         setTitle("PEX 3");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        new Battle();
-        setBounds(100, 100, Main.SIZE, Main.SIZE);
+//        new Battle();
+		setBounds(10, 10, Main.SIZE, Main.SIZE);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -84,7 +84,7 @@ public class ListenerDemo extends JFrame {
             displayPanel.addMouseListener(new DisplayPanelMouseListener());
             displayPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
             displayPanel.setBackground(Color.WHITE);
-            displayPanel.setBounds(0, 0, Main.SIZE, Main.SIZE);
+			displayPanel.setBounds(10, 10, Main.SIZE, Main.SIZE);
             displayPanel.setLayout(null);
 
             ///////////////
@@ -99,7 +99,7 @@ public class ListenerDemo extends JFrame {
     private JLabel getLblReportLabel() {
         if (lblReportLabel == null) {
             lblReportLabel = new JLabel("This is where feedback goes...");
-            lblReportLabel.setBounds(10, 222, 206, 29);
+			lblReportLabel.setBounds(10, Main.SIZE - Main.SIZE / 10, 206, 29);
         }
         return lblReportLabel;
     }
@@ -108,7 +108,7 @@ public class ListenerDemo extends JFrame {
         if (btnDemoButton == null) {
             btnDemoButton = new JButton("Demo Button");
             btnDemoButton.addMouseListener(new BtnDemoButtonMouseListener());
-            btnDemoButton.setBounds(226, 222, 198, 29);
+			btnDemoButton.setBounds(226, Main.SIZE - Main.SIZE / 10, 198, 29);
         }
         return btnDemoButton;
     }

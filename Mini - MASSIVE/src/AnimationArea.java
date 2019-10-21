@@ -10,8 +10,7 @@ public class AnimationArea extends JPanel {
     // constructor for AnimationArea objects
     public AnimationArea() {
         super();    // constructor for JPanel
-        xPos = 10;  // initialize ball position
-        yPos = 10;
+        new Battle();
     }
 
     // animate() is called as separate thread
@@ -24,7 +23,7 @@ public class AnimationArea extends JPanel {
 
     // paint() is called automatically by the JVM
     public void paint(Graphics g) {
-
+        g.clearRect(5, 5, this.getWidth(), this.getHeight());
         // clear the background
         Battle.drawArmy(g);
         this.repaint();    // make updated graphics visible

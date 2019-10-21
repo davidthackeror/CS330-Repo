@@ -140,6 +140,7 @@ class Battle {
      * @param armies a array list containing all the armies in play
      */
     private static void warriorDamage(ArrayList<Army> armies) {
+
         Random rand = new Random();
         for (Object army : armies) {
             Army Attackers = (Army) army;
