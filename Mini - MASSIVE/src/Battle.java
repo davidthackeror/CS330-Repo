@@ -22,18 +22,16 @@ class Battle {
 
     Battle() {
         OptionPanes.optionPanes();
-        Army allies = OptionPanes.armySize(0);
-        Army axis = OptionPanes.armySize(1);
-        Army swiss = OptionPanes.armySize(2);
-
-        armies.add(allies);
-        armies.add(axis);
-        armies.add(swiss);
+        addArmy(0, "allies", armies);
+        addArmy(1, "axis", armies);
 
     }
-
+    static void addArmy(int allianceNumber, String name, ArrayList<Army> armies){
+        Army blank = OptionPanes.armySize(allianceNumber, name);
+        armies.add(blank);
+    }
     static void drawArmy(Graphics g) {
-        warriorDamage(armies);
+
         Battle.drawWarriors((Graphics2D) g, armies);
     }
     /**
@@ -79,6 +77,7 @@ class Battle {
      *
      */
     static void moveWarriors() {
+        warriorDamage(armies);
         Random rand = new Random();
         for (Object army : armies) {
             Army Attackers = (Army) army;
