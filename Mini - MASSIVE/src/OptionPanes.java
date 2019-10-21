@@ -32,7 +32,7 @@ class OptionPanes {
     /**
      * the maximum allowed size in the game regardless of user inputs
      */
-    private static final int absSize = 100;
+    private static final int absSize = 40;
     /**
      * the maximum allowed range in the game regardless of user inputs
      */
@@ -114,7 +114,7 @@ class OptionPanes {
      * @param allianceNumber the alliance number of the generated army
      * @return a army containing the selected number of soldiers
      */
-    static Army armySize(int allianceNumber) {
+    static Army armySize(int allianceNumber, String name) {
         int absValue = 50;
 //        int numArchers = numClass("archers", allianceNumber, absValue);
 //        int numKnights = numClass("knights", allianceNumber, absValue);
@@ -128,7 +128,7 @@ class OptionPanes {
         int numOrcs = 1;
         int numOgres = 1;
 
-        return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres, "Yes");
+        return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres, name);
     }
 
     /**

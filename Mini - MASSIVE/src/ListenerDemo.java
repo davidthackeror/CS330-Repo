@@ -38,7 +38,7 @@ public class ListenerDemo extends JFrame {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+    public static void notmain(String[] args) {
         SwingUtilities.invokeLater(new Runnable() { // anonymous launch
             public void run() {
                 try {
@@ -57,7 +57,7 @@ public class ListenerDemo extends JFrame {
     public ListenerDemo() {
         setTitle("PEX 3");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        new Battle();
+        Battle battle = new Battle();
         setBounds(100, 100, Main.SIZE, Main.SIZE);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
