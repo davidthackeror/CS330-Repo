@@ -18,13 +18,24 @@ class Battle {
      * the relative path to the death sound
      */
     static String fileName = "Minecraft-death-sound.wav";
+    private static ArrayList<Army> armies = new ArrayList<>();
 
-    Battle(Graphics2D g, ArrayList<Army> armies) {
-        warriorDamage(armies);
-        moveWarriors(armies);
-        Battle.drawWarriors(g, armies);
+    Battle() {
+        OptionPanes.optionPanes();
+        Army allies = OptionPanes.armySize(0);
+        Army axis = OptionPanes.armySize(1);
+        Army swiss = OptionPanes.armySize(2);
+
+        armies.add(allies);
+        armies.add(axis);
+        armies.add(swiss);
+
     }
 
+    static void drawArmy(Graphics g) {
+        warriorDamage(armies);
+        Battle.drawWarriors((Graphics2D) g, armies);
+    }
     /**
      * detectEnemy() uses the Vector330Class to determine the enemy closest to a selected warrior
      * and store the closest warrior, its magnitude, and army in the array
@@ -66,9 +77,8 @@ class Battle {
     /**
      * moveWarriors() will move all warriors of the respective armies closer to closest enemy detected
      *
-     * @param armies an array list containing all armies in play
      */
-    private static void moveWarriors(ArrayList<Army> armies) {
+    static void moveWarriors() {
         Random rand = new Random();
         for (Object army : armies) {
             Army Attackers = (Army) army;

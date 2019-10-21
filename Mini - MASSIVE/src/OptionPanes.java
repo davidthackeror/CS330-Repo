@@ -45,17 +45,17 @@ class OptionPanes {
      */
     static void optionPanes() {
         //create a JOptionPane to see if the user wants to select default attributes or make their own for each class
-        int reply = JOptionPane.showConfirmDialog(null, "Would you like to select your own attributes",
-                "Accept Defaults", JOptionPane.YES_NO_OPTION);
-
-
-        if (reply == JOptionPane.YES_OPTION) { //have the user generate their own
-            setValues(Warrior.archerStats, "Archer");
-            setValues(Warrior.knightStats, "Knight");
-            setValues(Warrior.dragonStats, "Dragon");
-            setValues(Warrior.orcStats, "Orc");
-            setValues(Warrior.ogreStats, "Ogre");
-        } else { //set defaults for each class to 'balanced' values
+//        int reply = JOptionPane.showConfirmDialog(null, "Would you like to select your own attributes",
+//                "Accept Defaults", JOptionPane.YES_NO_OPTION);
+//
+//
+//        if (reply == JOptionPane.YES_OPTION) { //have the user generate their own
+//            setValues(Warrior.archerStats, "Archer");
+//            setValues(Warrior.knightStats, "Knight");
+//            setValues(Warrior.dragonStats, "Dragon");
+//            setValues(Warrior.orcStats, "Orc");
+//            setValues(Warrior.ogreStats, "Ogre");
+//        } else { //set defaults for each class to 'balanced' values
             //each warrior has an array set up that gives the max and min values stored in the format shown below
             Warrior.archerStats[0] = 50;//health
             Warrior.archerStats[1] = 10;//minAttack
@@ -107,7 +107,6 @@ class OptionPanes {
             Warrior.ogreStats[7] = 20;//Size
             Warrior.ogreStats[8] = 3;//Range
         }
-    }
 
     /**
      * armySize() prompts the user to input how many of each unit they would like in an army
