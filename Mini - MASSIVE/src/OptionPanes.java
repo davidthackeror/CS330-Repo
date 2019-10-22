@@ -4,7 +4,7 @@ import java.awt.*;
 
 /**
  * Project: Mini - MASSIVE
- * : Displays to the user the starting JOptionPanes
+ * : severely depreciated class, now runs assignments of attributes and number of each soldier assigned to an army
  *
  * @author David Thacker
  * Date: 22 Sept 19
@@ -41,73 +41,24 @@ class OptionPanes {
 
 
     /**
-     * optionPanes() generates the starting JOptionPanes for attributes or default values.
+     * This class is severely depreciated, do not use functions in this class
      */
     static void optionPanes() {
-        //create a JOptionPane to see if the user wants to select default attributes or make their own for each class
-//        int reply = JOptionPane.showConfirmDialog(null, "Would you like to select your own attributes",
-//                "Accept Defaults", JOptionPane.YES_NO_OPTION);
-//
-//
-//        if (reply == JOptionPane.YES_OPTION) { //have the user generate their own
-//            setValues(Warrior.archerStats, "Archer");
-//            setValues(Warrior.knightStats, "Knight");
-//            setValues(Warrior.dragonStats, "Dragon");
-//            setValues(Warrior.orcStats, "Orc");
-//            setValues(Warrior.ogreStats, "Ogre");
-//        } else { //set defaults for each class to 'balanced' values
-            //each warrior has an array set up that gives the max and min values stored in the format shown below
-            Warrior.archerStats[0] = 50;//health
-            Warrior.archerStats[1] = 10;//minAttack
-            Warrior.archerStats[2] = 20;//maxAttack
-            Warrior.archerStats[3] = 4;//minSpeed
-            Warrior.archerStats[4] = 6;//maxSpeed
-            Warrior.archerStats[5] = 10;//minCourage
-            Warrior.archerStats[6] = 30;//maxCourage
-            Warrior.archerStats[7] = 10;//Size
-            Warrior.archerStats[8] = 10;//Range
 
-            Warrior.knightStats[0] = 100;//health
-            Warrior.knightStats[1] = 25;//minAttack
-            Warrior.knightStats[2] = 45;//maxAttack
-            Warrior.knightStats[3] = 4;//minSpeed
-            Warrior.knightStats[4] = 8;//maxSpeed
-            Warrior.knightStats[5] = 30;//minCourage
-            Warrior.knightStats[6] = 60;//maxCourage
-            Warrior.knightStats[7] = 15;//Size
-            Warrior.knightStats[8] = 1;//Range
-
-            Warrior.dragonStats[0] = 750;//health
-            Warrior.dragonStats[1] = 30;//minAttack
-            Warrior.dragonStats[2] = 75;//maxAttack
-            Warrior.dragonStats[3] = 4;//minSpeed
-            Warrior.dragonStats[4] = 6;//maxSpeed
-            Warrior.dragonStats[5] = 90;//minCourage
-            Warrior.dragonStats[6] = 100;//maxCourage
-            Warrior.dragonStats[7] = 25;//Size
-            Warrior.dragonStats[8] = 10;//Range
-
-            Warrior.orcStats[0] = 75;//health
-            Warrior.orcStats[1] = 10;//minAttack
-            Warrior.orcStats[2] = 20;//maxAttack
-            Warrior.orcStats[3] = 4;//minSpeed
-            Warrior.orcStats[4] = 6;//maxSpeed
-            Warrior.orcStats[5] = 25;//minCourage
-            Warrior.orcStats[6] = 75;//maxCourage
-            Warrior.orcStats[7] = 10;//Size
-            Warrior.orcStats[8] = 1;//Range
-
-            Warrior.ogreStats[0] = 150;//health
-            Warrior.ogreStats[1] = 30;//minAttack
-            Warrior.ogreStats[2] = 50;//maxAttack
-            Warrior.ogreStats[3] = 2;//minSpeed
-            Warrior.ogreStats[4] = 5;//maxSpeed
-            Warrior.ogreStats[5] = 50;//minCourage
-            Warrior.ogreStats[6] = 70;//maxCourage
-            Warrior.ogreStats[7] = 20;//Size
-            Warrior.ogreStats[8] = 3;//Range
         }
 
+    static void setWarriorArrayAttributes(int[] array) {
+        array[0] = 50;//health
+        array[1] = 10;//minAttack
+        array[2] = 20;//maxAttack
+        array[3] = 4;//minSpeed
+        array[4] = 6;//maxSpeed
+        array[5] = 10;//minCourage
+        array[6] = 30;//maxCourage
+        array[7] = 10;//Size
+        array[8] = 10;//Range
+
+    }
     /**
      * armySize() prompts the user to input how many of each unit they would like in an army
      *
@@ -115,20 +66,23 @@ class OptionPanes {
      * @return a army containing the selected number of soldiers
      */
     static Army armySize(int allianceNumber, String name) {
-        int absValue = 50;
-//        int numArchers = numClass("archers", allianceNumber, absValue);
-//        int numKnights = numClass("knights", allianceNumber, absValue);
-//        int numDragons = numClass("dragons", allianceNumber, absValue);
-//        int numOrcs = numClass("orcs", allianceNumber, absValue);
-//        int numOgres = numClass("ogres", allianceNumber, absValue);
+        if (name.equals("null")) {
+            return new Army(allianceNumber, 0, 0, 0, 0, 0, name);
 
-        int numArchers = 1;
-        int numKnights = 1;
-        int numDragons = 1;
-        int numOrcs = 1;
-        int numOgres = 1;
+        } else {
+            setWarriorArrayAttributes(Warrior.archerStats);
+            int numArchers = 2;
+            setWarriorArrayAttributes(Warrior.knightStats);
+            int numKnights = 2;
+            setWarriorArrayAttributes(Warrior.dragonStats);
+            int numDragons = 2;
+            setWarriorArrayAttributes(Warrior.orcStats);
+            int numOrcs = 2;
+            setWarriorArrayAttributes(Warrior.ogreStats);
+            int numOgres = 2;
 
-        return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres, name);
+            return new Army(allianceNumber, numArchers, numKnights, numDragons, numOrcs, numOgres, name);
+        }
     }
 
     /**

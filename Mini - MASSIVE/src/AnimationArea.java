@@ -1,6 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Project: Mini - MASSIVE
+ * : creates and animates on the animationthread and JPanel
+ *
+ * @author N/A
+ * Date: 22 Sept 19
+ * Class: CS330
+ */
 @SuppressWarnings("serial")
 public class AnimationArea extends JPanel {
 
@@ -10,7 +18,7 @@ public class AnimationArea extends JPanel {
     // constructor for AnimationArea objects
     public AnimationArea() {
         super();    // constructor for JPanel
-       this.height = 800;
+        this.height = 600;
        this.width = 600;
        this.setSize(this.height, this.width);
     }

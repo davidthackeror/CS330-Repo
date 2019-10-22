@@ -18,7 +18,11 @@ class Battle {
      * the relative path to the death sound
      */
     static String fileName = "Minecraft-death-sound.wav";
+    /**
+     * the armies arraylist containing all armys and therefore warriors
+     */
     private static ArrayList<Army> armies = new ArrayList<>();
+
 
     Battle() {
         OptionPanes.optionPanes();
@@ -26,10 +30,26 @@ class Battle {
         addArmy(1, "axis", armies);
 
     }
-    static void addArmy(int allianceNumber, String name, ArrayList<Army> armies){
-        Army blank = OptionPanes.armySize(allianceNumber, name);
-        armies.add(blank);
+
+    /**
+     * adds an army with predetermined warrior allotments and the following attributes
+     *
+     * @param allianceNumber the number the army associates its alliance with
+     * @param name           the name of that army
+     * @param armies         the arraylist containing all armys
+     */
+    static void addArmy(int allianceNumber, String name, ArrayList<Army> armies) {
+        armies.add(OptionPanes.armySize(allianceNumber, name));
     }
+
+    public ArrayList<Army> getArmies() {
+        return armies;
+    }
+
+    /**
+     * calls drawWarriors while also passing the armies array contained within
+     * @param g the graphics panel to be drawn on
+     */
     static void drawArmy(Graphics g) {
 
         Battle.drawWarriors((Graphics2D) g, armies);
@@ -144,53 +164,59 @@ class Battle {
         for (Object army : armies) {
             Army Attackers = (Army) army;
             for (int i = 0; i < Attackers.soldiers.size(); i++) {
-                int[] intArray = new int[3];
-                intArray[0] = -1; //index of lowest
-                intArray[1] = 1000; //magnitude of lowest
-                intArray[2] = -1; //army of lowest
-                for (Object o : armies) {
-                    Army enemyArmy = (Army) o;
-                    if (enemyArmy.getAllianceNum() != Attackers.getAllianceNum()) {
-                        detectEnemy(Attackers.soldiers.get(i), enemyArmy, intArray);
+                if (Attackers.soldiers.get(i).isAlive()) {
+                    int[] intArray = new int[4];
+                    intArray[0] = -1; //index of lowest
+                    intArray[1] = 1000; //magnitude of lowest
+                    intArray[2] = -1; //army of lowest
+                    for (Object o : armies) {
+                        Army enemyArmy = (Army) o;
+                        if (enemyArmy.getAllianceNum() != Attackers.getAllianceNum()) {
+                            detectEnemy(Attackers.soldiers.get(i), enemyArmy, intArray);
+                        }
                     }
-                }
-                try {
-                    if (intArray[0] == -1) {
-                        throw new Exception("That does not exist.");
+                    try {
+                        if (intArray[0] == -1) {
+                            throw new Exception("That does not exist.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("An index of the nearest soldier was not found");
+                        break;
                     }
-                } catch (Exception e) {
-                    System.out.println("An index of the nearest soldier was not found");
-                    break;
-                }
-                Army Defenders = (Army) armies.get(intArray[2]);
-                if (magnitude(Attackers.soldiers.get(i), Defenders, intArray[0]) <= Attackers.soldiers.get(i).getRange() + Attackers.soldiers.get(i).getSize() && Defenders.soldiers.get(intArray[0]).isAlive()) {
-                    //determine if attacker has missed the defender
-                    if (!(rand.nextInt(100) <= 100 * Attackers.soldiers.get(i).getAttack() / (Attackers.soldiers.get(i).getAttack() + Defenders.soldiers.get(intArray[0]).getAttack()))) {
-                        //stop them from moving so that they can shoot or attack
-                        Attackers.soldiers.get(i).setMoving(false);
-                        Defenders.soldiers.get(intArray[0]).setHealth(Defenders.soldiers.get(intArray[0]).getHealth() - Attackers.soldiers.get(i).getAttack());
+                    Army Defenders = (Army) armies.get(intArray[2]);
+                    if (magnitude(Attackers.soldiers.get(i), Defenders, intArray[0]) <= Attackers.soldiers.get(i).getRange() + Attackers.soldiers.get(i).getSize() && Defenders.soldiers.get(intArray[0]).isAlive()) {
+                        //determine if attacker has missed the defender
+                        if (!(rand.nextInt(100) <= 100 * Attackers.soldiers.get(i).getAttack() / (Attackers.soldiers.get(i).getAttack() + Defenders.soldiers.get(intArray[0]).getAttack()))) {
+                            //stop them from moving so that they can shoot or attack
+                            Attackers.soldiers.get(i).setMoving(false);
+                            Defenders.soldiers.get(intArray[0]).setHealth(Defenders.soldiers.get(intArray[0]).getHealth() - Attackers.soldiers.get(i).getAttack());
 
-                        //show how much damage was done
-                        System.out.println(Attackers.soldiers.get(i).getName() + " just dealt " + (Attackers.soldiers.get(i).getAttack()) +
-                                " damage to " + Defenders.soldiers.get(intArray[0]).getName() + " in army " + intArray[2]);
+                            //show how much damage was done
+                            System.out.println(Attackers.soldiers.get(i).getName() + " just dealt " + (Attackers.soldiers.get(i).getAttack()) +
+                                    " damage to " + Defenders.soldiers.get(intArray[0]).getName() + " in army " + intArray[2]);
 
-                        if (Defenders.soldiers.get(intArray[0]).getHealth() <= 0) {
-                            playSound();
-                            Defenders.soldiers.get(intArray[0]).setAlive(false);
-                            System.out.println(Attackers.soldiers.get(i).getName() + " " + i + " just killed " + Defenders.soldiers.get(intArray[0]).getName() + " " + intArray[0] + " in army " + intArray[2]);
+                            if (Defenders.soldiers.get(intArray[0]).getHealth() <= 0) {
+                                playSound();
+                                Defenders.soldiers.get(intArray[0]).setAlive(false);
+                                System.out.println(Attackers.soldiers.get(i).getName() + " " + i + " just killed " + Defenders.soldiers.get(intArray[0]).getName() + " " + intArray[0] + " in army " + intArray[2]);
+                            }
+                        } else {
+                            //print out a missed message
+                            System.out.println(Attackers.soldiers.get(i).getName() + " has just missed " + Defenders.soldiers.get(intArray[0]).getName());
                         }
                     } else {
-                        //print out a missed message
-                        System.out.println(Attackers.soldiers.get(i).getName() + " has just missed " + Defenders.soldiers.get(intArray[0]).getName());
+                        Attackers.soldiers.get(i).setMoving(true);
                     }
-                } else {
-                    Attackers.soldiers.get(i).setMoving(true);
+                    Attackers.soldiers.get(i).setMinArray(intArray);
                 }
-                Attackers.soldiers.get(i).setMinArray(intArray);
+
             }
         }
     }
 
+    /**
+     * plays the minecraft death noise when a soldier is killed
+     */
     private static void playSound() {
         //creates a noise when a warrior dies
         try {

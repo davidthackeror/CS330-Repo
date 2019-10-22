@@ -2,7 +2,7 @@ import javax.swing.*;
 
 /**
  * Project: Mini - MASSIVE
- *
+ * :The room where it happens
  * @author David Thacker
  * Date: 22 Sept 19
  * Class: CS330
@@ -16,6 +16,7 @@ public class Main {
     public static void main(String[] args) {
 
         //call for preset values or not user selected values for each warrior class
+        //size of an army is determined in OptionPanes.ArmySize()
         OptionPanes.optionPanes();
         Battle battle = new Battle();
         BattleGUI battleGUI = new BattleGUI();
@@ -26,9 +27,14 @@ public class Main {
         jFrame.pack();
         jFrame.setVisible(true);
         AnimationThread animationThread = new AnimationThread(battleGUI.getAnimationArea());
-        animationThread.toggleAnimation();
         animationThread.start();
+        animationThread.toggleAnimation();
         battleGUI.setAnimationThread(animationThread);
+        for (Army a : battle.getArmies()) {
+            battleGUI.getArmyComboBox().addItem(new ComboArmyItem(a.getArmyName(), a));
+        }
+
+
 
     }
 
